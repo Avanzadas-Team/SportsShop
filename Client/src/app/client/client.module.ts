@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ClientRoutingModule } from './client-routing.module';
 import { RegisterModuleComponent } from './components/register-module/register-module.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PurchaseModuleComponent } from './components/purchase-module/purchase-module.component';
 
 
 @NgModule({
-  declarations: [RegisterModuleComponent],
+  declarations: [RegisterModuleComponent, PurchaseModuleComponent],
   imports: [
     CommonModule,
     ClientRoutingModule,
@@ -15,12 +16,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports : [
-    RegisterModuleComponent
+    RegisterModuleComponent,
+    PurchaseModuleComponent
   ],
   providers : [
   ],
   bootstrap: [
-    RegisterModuleComponent
+    RegisterModuleComponent,
+    PurchaseModuleComponent
   ]
 })
 export class ClientModule {  }
