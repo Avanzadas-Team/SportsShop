@@ -1,4 +1,0 @@
-From neo4j
-
-EXPOSE 7474
-EXPOSE 7687
