@@ -1,5 +1,7 @@
 ﻿using Neo4j.Driver;
+using Server.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Server.Persistence
 {
@@ -15,6 +17,12 @@ namespace Server.Persistence
         public void Dispose()
         {
             _driver?.Dispose();
+        }
+
+        public IEnumerable<Article> GetHistory(User user)
+        {
+            var session = _driver.AsyncSession()
+            return ;
         }
     }
 }
