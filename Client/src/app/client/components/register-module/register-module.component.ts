@@ -1,4 +1,6 @@
+import { HttpService } from './../../../http.service';
 import { Component, OnInit } from '@angular/core';
+//import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-module',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterModuleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service : HttpService){}//private http: HttpClient) { }
 
   name :string;
 
@@ -32,8 +34,16 @@ export class RegisterModuleComponent implements OnInit {
   }
 
   register(){
-  this.info = {nombre: this.name, apellido: this.lname, nombreUsuario: this.uname, contrasena: this.pass, birthdate: this.birthdate, sexo: this.sexuality}
-    console.log(this.info);
+    this.info = {Name: this.name,
+                LName: this.lname, 
+                Username: this.uname, 
+                Password: this.pass, 
+                Birthdate: this.birthdate, 
+                Sex: this.sexuality,
+                Cart: []};
+    this.service.register(this.info).subscribe(r => {
+      console.log("Respuesta",r);
+    });
   }
 
 }
