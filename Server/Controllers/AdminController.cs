@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Server.Models;
+using Server.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,11 +14,20 @@ namespace Server.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        // GET: api/<AdminController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly SportsShopDBService _context;
+
+        public AdminController(SportsShopDBService context)
         {
-            return new string[] { "value1", "value2" };
+            _context = context;
+        }
+
+
+        // GET: api/<AdminController>
+        [HttpGet("Users")]
+        public IEnumerable<UserMDB> GetUsers()
+        {
+            List<UserMDB> users = _context.GetUsers();
+            return users;
         }
 
         // GET api/<AdminController>/5

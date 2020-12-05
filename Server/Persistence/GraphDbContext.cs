@@ -19,10 +19,9 @@ namespace Server.Persistence
             _driver?.Dispose();
         }
 
-        public IEnumerable<Article> GetHistory(User user)
+        public void GetHistory(User user)
         {
-            var session = _driver.AsyncSession()
-            return ;
+            var session = _driver.AsyncSession();
         }
     }
 }

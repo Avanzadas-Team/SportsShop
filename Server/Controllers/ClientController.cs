@@ -19,18 +19,18 @@ namespace Server.Controllers
         public async Task<IActionResult> Register(User user)
         {
             return Ok(user);
-        }
+        }/*
         [HttpPut]
         public async Task<IActionResult> Buy(User user, Article article)
         {
             return Ok(article);
-        }
+        }*/
 
         [HttpGet]
         public async Task<IActionResult> History(User user)
         {
             IEnumerable<Article> articlesBought = new List<Article>();
-            _graphContext
+            //_graphContext
             return Ok(articlesBought);
         }
     }
