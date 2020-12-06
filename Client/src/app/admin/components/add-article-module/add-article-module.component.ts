@@ -1,5 +1,7 @@
 import { HttpService } from './../../../http.service';
 import { Component, OnInit } from '@angular/core';
+import { ConvertPropertyBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-add-article-module',
@@ -24,9 +26,11 @@ export class AddArticleModuleComponent implements OnInit {
 
   sports: string[] = [];
 
-  image : File;
+  image : Observable<any>;
 
-  type: string;
+  imageSelected : string;
+
+  type: number;
 
   edit: boolean;
 
@@ -49,22 +53,51 @@ export class AddArticleModuleComponent implements OnInit {
     }
   }
 
+  onChange($event: Event) {
+    const file = ($event.target as HTMLInputElement).files[0];
+    
+    this.convertToBase64(file);
+  }
+
+  convertToBase64(file: File) {
+    this.image = new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });const observable = new Observable((subscriber: Subscriber<any>) => { this.readFile(file, subscriber) });
+    observable.subscribe((d) => {
+      this.imageSelected = d;
+    });
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
+    filereader.readAsDataURL(file);
+
+    filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+    };
+    filereader.onerror = (error) => {
+      subscriber.error(error);
+      subscriber.complete();
+    };
+  }
+
   addArticle(){
 
     this.info = {
-      Name: this.aname,
-      Make: this.brand,
-      Price: this.price,
-      sports: this.sports,
-      limitEd: this.edit,
-      Type: this.type,
-      ImageId: ""
+      name: this.aname,
+      marca: this.brand,
+      precio: this.price,
+      deportes: this.sports,
+      edicionLim: this.edit,
+      tipo: Number(this.type),
+      unDisp: this.stock,
+      imagen: this.imageSelected
     }
-    this.service.postArticle(this.info).subscribe(r => {
-      this.response = r;
-      this.service.postImage(this.response, this.image).subscribe(res => {
-        console.log("Respuesta",res);
-      });
-    });
+    var formData = new FormData();
+    formData.append('image',this.imageSelected);
+    console.log(this.imageSelected);
+    console.log(formData.get('file'));
+    this.service.postArticle(this.info);
   }
 }
