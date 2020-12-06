@@ -15,4 +15,8 @@ export class HttpService {
   register(info){
     return this.http.put("https://localhost:44383/client",info);
   }
+
+  postArticle(info){
+    return this.http.post("https://localhost:44383/",info);
+  }
 }
