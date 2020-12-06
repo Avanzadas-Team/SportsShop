@@ -80,9 +80,8 @@ namespace Server.Controllers
         }
 
         [HttpPost("image/{id}")]
-        public async Task<byte[]> CreateImage([FromForm] IFormFile image, string id)
+        public async Task<ProductMDB> CreateImage([FromForm] IFormFile image, string id)
         {
-            System.Console.WriteLine(id);
             byte[] fileBytes;
 
             using (var stream = new MemoryStream())
@@ -97,7 +96,7 @@ namespace Server.Controllers
 
             _context.UpdateProduct(id, product);
 
-            return fileBytes;
+            return product;
         }
 
         [HttpGet("productimages/{id}")]
@@ -108,11 +107,11 @@ namespace Server.Controllers
         }
 
         [HttpPost("product")]
-        public String CreateProduct(ProductMDB product)
+        public ProductMDB CreateProduct(ProductMDB product)
         {
             _context.CreateProduct(product);
 
-            return product.Id;
+            return product;
         }
 
         [HttpPost("promotion")]

@@ -34,9 +34,6 @@ namespace Server.Models
         [BsonElement("imagen")]
         public byte[] Imagen { get; set; }
 
-        [BsonElement("inventory")]
-        public int Inventory { get; set; }
-
         [BsonElement("tipo")]
         public int Tipo { get; set; }
     }
