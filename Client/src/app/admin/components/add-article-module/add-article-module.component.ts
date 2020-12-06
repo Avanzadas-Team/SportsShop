@@ -94,10 +94,9 @@ export class AddArticleModuleComponent implements OnInit {
       unDisp: this.stock,
       imagen: this.imageSelected
     }
-    var formData = new FormData();
-    formData.append('image',this.imageSelected);
-    console.log(this.imageSelected);
-    console.log(formData.get('file'));
-    this.service.postArticle(this.info);
+    console.log(this.info);
+    this.service.postArticle(this.info).subscribe(res => {
+      console.log(res);
+    });
   }
 }
