@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Server.Models
 {
-    public class UserMDB
+    public class UserMDB : INode
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

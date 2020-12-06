@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Server.Models
 {
-    public class ProductMDB
+    public class ProductMDB : INode
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("nombreArt")]
-        public string NombreArt { get; set; }
+        [BsonElement("name")]
+        public string Name { get; set; }
 
         [BsonElement("marca")]
         public string Marca { get; set; }
@@ -33,6 +33,9 @@ namespace Server.Models
 
         [BsonElement("imagen")]
         public byte[] Imagen { get; set; }
+
+        [BsonElement("inventory")]
+        public int Inventory { get; set; }
 
         [BsonElement("tipo")]
         public int Tipo { get; set; }

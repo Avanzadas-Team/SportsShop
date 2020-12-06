@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
 using Server.Services;
@@ -23,11 +25,102 @@ namespace Server.Controllers
 
 
         // GET: api/<AdminController>
-        [HttpGet("Users")]
+        [HttpGet("users")]
         public IEnumerable<UserMDB> GetUsers()
         {
             List<UserMDB> users = _context.GetUsers();
             return users;
+        }
+
+        // GET: api/<AdminController>
+        [HttpPost("users/sname")]
+        public UserMDB GetUserbyName(UserMDB user)
+        {
+            List<UserMDB> users = _context.GetUsers();
+
+            var userFound = new UserMDB();
+
+            foreach (var us in users)
+            {
+                if(us.Name == user.Name)
+                {
+                    userFound = us;
+                    return userFound;
+                }
+            }
+
+            return userFound;
+        }
+
+        [HttpPost("users/susername")]
+        public UserMDB GetUserbyUserName(UserMDB user)
+        {
+            List<UserMDB> users = _context.GetUsers();
+
+            var userFound = new UserMDB();
+
+            foreach (var us in users)
+            {
+                if (us.UserName == user.UserName)
+                {
+                    userFound = us;
+                    return userFound;
+                }
+            }
+
+            return userFound;
+        }
+
+        [HttpPost("users/username")]
+        public UserMDB RegisterUser(UserMDB user)
+        {
+            _context.CreateUser(user);
+
+            return user;
+        }
+
+        [HttpPost("image/{id}")]
+        public async Task<byte[]> CreateImage([FromForm] IFormFile image, string id)
+        {
+            System.Console.WriteLine(id);
+            byte[] fileBytes;
+
+            using (var stream = new MemoryStream())
+            {
+                await image.CopyToAsync(stream);
+                fileBytes = stream.ToArray();
+            }
+
+            var product = _context.GetProduct(id);
+
+            product.Imagen = fileBytes;
+
+            _context.UpdateProduct(id, product);
+
+            return fileBytes;
+        }
+
+        [HttpGet("productimages/{id}")]
+        public IActionResult GetMovieImages(string id)
+        {
+            byte[] images = _context.GetProduct(id).Imagen;
+            return File(images, "image/jpeg");
+        }
+
+        [HttpPost("product")]
+        public String CreateProduct(ProductMDB product)
+        {
+            _context.CreateProduct(product);
+
+            return product.Id;
+        }
+
+        [HttpPost("promotion")]
+        public PromotionMDB CreatePromotion(PromotionMDB promotion)
+        {
+            _context.CreatePromotion(promotion);
+
+            return promotion;
         }
 
         // GET api/<AdminController>/5

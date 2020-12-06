@@ -1,20 +1,17 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Server.Models
 {
-    public class PromotionMDB
+    public class PromotionMDB : INode
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("nombre")]
-        public string Nombre { get; set; }
+        [BsonElement("name")]
+        public string Name { get; set; }
 
         [BsonElement("descripcion")]
         public string Descripcion { get; set; }
@@ -23,7 +20,16 @@ namespace Server.Models
         public string NombreDelProd { get; set; }
 
         [BsonElement("idProd")]
-        public string idProd { get; set; }
+        public string IdProd { get; set; }
+
+        [BsonElement("discount")]
+        public bool Discount { get; set; }
+
+        [BsonElement("percentage")]
+        public string Percentage { get; set; }
+
+        [BsonElement("descr")]
+        public string Description { get; set; }
 
         [BsonElement("fechaIn")]
         public DateTime FechaIn { get; set; }
