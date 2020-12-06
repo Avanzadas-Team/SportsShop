@@ -13,10 +13,14 @@ export class HttpService {
   putResponse: string;
 
   register(info){
-    return this.http.put("https://localhost:44383/client",info);
+    return this.http.post("https://localhost:44383/admin/users/username",info);
   }
 
   postArticle(info){
-    return this.http.post("https://localhost:44383/",info);
+    return this.http.post("https://localhost:44383/admin/product",info);
+  }
+
+  postImage(id, image){
+    return this.http.post("https://localhost:44383/admin/productimages/" + id, image);
   }
 }
