@@ -90,7 +90,6 @@ namespace Server.Controllers
         public async Task<ProductMDB> CreateImage([FromForm] IFormFile image, string id)
         {
             var product = _context.GetProduct(id);
-
             _context.UpdateProduct(id, product);
 
             return product;
