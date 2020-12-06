@@ -19,4 +19,8 @@ export class HttpService {
   postArticle(info){
     return this.http.post("https://localhost:44383/",info);
   }
+
+  postImage(id, image){
+    return this.http.post("https://localhost:44383/Admin/" + id, image);
+  }
 }

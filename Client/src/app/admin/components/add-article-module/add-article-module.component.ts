@@ -32,6 +32,8 @@ export class AddArticleModuleComponent implements OnInit {
 
   info;
 
+  response;
+
   ngOnInit(): void {
   }
 
@@ -56,10 +58,13 @@ export class AddArticleModuleComponent implements OnInit {
       sports: this.sports,
       limitEd: this.edit,
       Type: this.type,
-      ImageId: this.image
+      ImageId: ""
     }
     this.service.postArticle(this.info).subscribe(r => {
-      console.log("Respuesta",r);
+      this.response = r;
+      this.service.postImage(this.response, this.image).subscribe(res => {
+        console.log("Respuesta",res);
+      });
     });
   }
 }
