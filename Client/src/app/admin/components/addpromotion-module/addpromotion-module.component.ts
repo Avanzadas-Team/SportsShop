@@ -1,3 +1,4 @@
+import { HttpService } from './../../../http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddpromotionModuleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: HttpService) { }
 
   pname: string;
 
@@ -23,22 +24,54 @@ export class AddpromotionModuleComponent implements OnInit {
 
   finishDate: Date;
 
+  discount: number = 0;
+
+  gvdescription: string = "";
+
+  products = [];
+
+  dogSelected : boolean;
+
   info;
 
   ngOnInit(): void {
-    //get productos
+    this.service.getProducts().subscribe(res => {
+      this.products = res;
+    });
+  }
+
+  dogChange(){
+    if(this.dog=="Promotion"){
+      this.dogSelected=true;
+    }else{
+      this.dogSelected = false;
+    }
+  }
+
+  getName(){
+    for(var x = 0; x < this.products.length; x++){
+      if(this.products[x].id == this.productId){
+        this.productName = this.products[x].name;
+      }
+    }
   }
 
   addPromotion(){
     this.info = {
-      Nombre: this.pname,
-      Descripcion: this.description,
-      NombreDelProd: this.productName,
+      name: this.pname,
+      descripcion: this.description,
+      nombreDelProd: this.productName,
       idProd: this.productId,
+      Discount: this.dogSelected,
+      Percentage: this.discount,
+      Descrip: this.gvdescription,
       FechaIn: this.initDate,
       FechaFin: this.finishDate 
     }
     console.log(this.info);  
+    this.service.postPromotion(this.info).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

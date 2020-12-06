@@ -23,4 +23,12 @@ export class HttpService {
   postImage(id, image){
     return this.http.post("https://localhost:44383/admin/productimages/" + id, image);
   }
+
+  getProducts(){
+    return this.http.get("https://localhost:44383/admin/products/");
+  }
+
+  postPromotion(info){
+    return this.http.post("https://localhost:44383/admin/promotion",info)
+  }
 }
