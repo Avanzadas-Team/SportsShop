@@ -13,7 +13,7 @@ export class HttpService {
   putResponse: string;
 
   register(info){
-    return this.http.put("https://localhost:44383/client",info);
+    return this.http.post("https://localhost:44383/admin/users/username",info);
   }
 
   postArticle(info){
