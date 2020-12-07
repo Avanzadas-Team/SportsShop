@@ -7,6 +7,7 @@ namespace Server.Models
 {
     public class Bought
     {
+        public string clientId { get; set; }
         public IEnumerable<Cart> Cart { get; set; }
         DateTime Date { get; set; }
     }
