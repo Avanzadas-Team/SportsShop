@@ -8,10 +8,12 @@ namespace Server.Models
 {
     public class Cart
     {
-        [BsonElement("pname")]
-        public string Name { get; set; }
 
         [BsonElement("pid")]
         public string ProductId { get; set; }
+
+        [BsonElement("quantity")]
+        public int Quantity { get; set; }
+
     }
 }

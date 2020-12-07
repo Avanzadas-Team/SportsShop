@@ -12,6 +12,7 @@ export class PurchaseModuleComponent implements OnInit {
 
   products;
   product;
+  quantity = 1;
   info;
   id = "5fcd310ead6b16e22cef3ea6";
 
@@ -23,8 +24,8 @@ export class PurchaseModuleComponent implements OnInit {
 
   addToCart(product){
     this.product = {
-      name: product.name,
-      productId: product.id
+      productId: product.id,
+      quantity: this.quantity
     }
     console.log(this.product);
     this.service.AddToCart(this.product, this.id).subscribe(res => {

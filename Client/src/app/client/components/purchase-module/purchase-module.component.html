@@ -11,6 +11,7 @@
             <div class="col-lg-6">
                 <h5><a routerLinkActive="active">{{ prod.name }}</a></h5>
                 <p >Price:  ${{ prod.precio }}</p>
+                <input type="number" class="form-control" [(ngModel)]="quantity" required min="1" max="{{prod.unDisp}}">
                 <button class="btn btn-dark" (click)="addToCart(prod)">Add to Cart</button>
             </div>
         </div>

@@ -18,7 +18,8 @@ import { CartModuleComponent } from './components/cart-module/cart-module.compon
   ],
   exports : [
     RegisterModuleComponent,
-    PurchaseModuleComponent
+    PurchaseModuleComponent,
+    CartModuleComponent
   ],
   providers : [
   ],
