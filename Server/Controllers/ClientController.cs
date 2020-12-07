@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("client")]
     [ApiController]
     public class ClientController : ControllerBase
     {
@@ -15,14 +15,15 @@ namespace Server.Controllers
         {
             _graphContext = graphDbContext;
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Register(User user)
         {
             return Ok(user);
         }
-        [HttpPut]
-        public async Task<IActionResult> Buy(User user, Article article)
+        [HttpPut("bought")]
+        public async Task<IActionResult> Buy(Resources.Bought bought)
         {
+            var article = (Article) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
             return Ok(article);
         }
 
@@ -30,7 +31,6 @@ namespace Server.Controllers
         public async Task<IActionResult> History(User user)
         {
             IEnumerable<Article> articlesBought = new List<Article>();
-            _graphContext
             return Ok(articlesBought);
         }
     }
