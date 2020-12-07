@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Neo4jClient;
+using Microsoft.Extensions.Options;
+using Server.Models;
 using Server.Persistence;
-using System;
+using Server.Services;
 
 namespace Server
 {
@@ -27,6 +28,14 @@ namespace Server
 
             services.AddSingleton<IGraphDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<GraphDbSettings>>().Value);
+
+            services.Configure<SportsShopDBSettings>(
+                Configuration.GetSection(nameof(SportsShopDBSettings)));
+
+            services.AddSingleton<ISportsShopDBSettings>(sp =>
+                sp.GetRequiredService<IOptions<SportsShopDBSettings>>().Value);
+
+            services.AddSingleton<SportsShopDBService>();
 
             services.AddCors(options =>
             {

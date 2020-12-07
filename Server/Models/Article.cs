@@ -9,8 +9,8 @@ namespace Server.Models
         public string Name { get; set ; }
         public string Make { get; set; }
         public decimal Price { get; set; }
-        public IEnumerable<string> Sports { get; set; }
-        public bool LimitEd { get; set; }
+        public IEnumerable<string> sports { get; set; }
+        public bool limitEd { get; set; }
         public ArticleType Type { get; set; }
         public string ImageId { get; set; }
     }

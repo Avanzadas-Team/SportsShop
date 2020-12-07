@@ -1,0 +1,40 @@
+<div class="container-fluid" id="jumboAU">
+    <h1 class="display-1 text-center" id="title">Add Article</h1>
+    <hr class="my-4">
+    <p class="h4 text-center" id="desc">This page allows you to add an article on the platform.</p>
+</div>
+<div style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
+    <label for="name">Article Name:</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="aname">
+    <label for="name">Make:</label>
+    <input type="text" class="form-control" id="lname" [(ngModel)]="brand">
+    <label for="name">Price:</label>
+    <input type="number" class="form-control" id="name"  [(ngModel)]="price">
+    <div>
+        <label for="name">Sports:</label>
+        <select name="" id="sexuality" class="form-control" [(ngModel)]="sport">
+            <option value="Soccer">Soccer</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Football">Football</option>
+            <option value="Tennis">Tennis</option>
+        </select>
+        <button (click)="addSport()" class="btn btn-dark">Add</button>
+    </div>
+    <label for="birth">Limited Edition:</label>
+    <select name="" (change) ="onEditionChange()" id="sexuality" class="form-control" [(ngModel)]="edition">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
+    <label for="image">Image:</label>
+    <input class="file-input form-control" type="file" [(ngModel)]="image">
+    <div>
+        <label for="sexuality">Units in Stock:</label>
+        <input type="number" min="0" class="form-control" [(ngModel)]="stock" required>
+    </div>
+    <label for="type">Type:</label>
+    <select name="" id="sexuality" class="form-control" [(ngModel)]="type">
+        <option value="Clothe">Clothe</option>
+        <option value="Article">Article</option>
+    </select>
+    <button (click) = "addArticle()" class="btn-lg btn-dark">Add Article!</button>
+</div>
