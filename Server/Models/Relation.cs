@@ -10,7 +10,12 @@ namespace Server.Models
         public DateTime Date { get; set; }
         public Relation(IRelation relation)
         {
-            this.Date = relation.Date;
+            Date = relation.Date;
         }
+        public Relation(DateTime date)
+        {
+            Date = date;
+        }
+        public Relation() { }
     }
 }
