@@ -1,3 +1,4 @@
+import { HttpService } from './../../../http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PurchaseModuleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service : HttpService) { }
+
+  products;
+  product;
+  info;
+  id = "5fcd310ead6b16e22cef3ea6";
 
   ngOnInit(): void {
+    this.service.getProducts().subscribe(res => {
+      this.products = res;
+    });
   }
 
+  addToCart(product){
+    this.product = {
+      name: product.name,
+      productId: product.id
+    }
+    console.log(this.product);
+    this.service.AddToCart(this.product, this.id).subscribe(res => {
+      console.log(res);
+    });
+  }
 }

@@ -1,7 +1,7 @@
 <div class="container-fluid" id="jumboAU">
-    <h1 class="display-1 text-center" id="title">Products List</h1>
+    <h1 class="display-1 text-center" id="title">Your Cart List</h1>
     <hr class="my-4">
-    <p class="h4 text-center" id="desc">This page allows you to add an products to your cart.</p>
+    <p class="h4 text-center" id="desc">This page allows you to create a purchase or delete products in your cart.</p>
 </div>
 <div class="container" style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
     <div class="row">
@@ -11,7 +11,7 @@
             <div class="col-lg-6">
                 <h5><a routerLinkActive="active">{{ prod.name }}</a></h5>
                 <p >Price:  ${{ prod.precio }}</p>
-                <button class="btn btn-dark" (click)="addToCart(prod)">Add to Cart</button>
+                <button class="btn btn-red" (click)="deleteToCart(prod)">Delete to Cart</button>
             </div>
         </div>
       </div>

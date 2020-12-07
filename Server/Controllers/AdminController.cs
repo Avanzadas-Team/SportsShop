@@ -39,6 +39,23 @@ namespace Server.Controllers
             return products;
         }
 
+        [HttpPost("cart/{id}")]
+        public Cart addProductoToCart(string id, Cart cart)
+        {
+            var user = _context.GetUser(id);
+            user.Cart = user.Cart.Append(cart);
+            _context.UpdateUser(id, user);
+            return cart;
+        }
+
+        [HttpGet("cart/{id}")]
+        public IEnumerable<Cart> getCarToUser(string id)
+        {
+            var cart = _context.GetUser(id).Cart;
+
+            return cart;
+        }
+
         // GET: api/<AdminController>
         [HttpPost("users/sname")]
         public UserMDB GetUserbyName(UserMDB user)
