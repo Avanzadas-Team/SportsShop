@@ -1,8 +1,10 @@
-﻿namespace Server.Controllers.Resources
+﻿using System.Collections.Generic;
+
+namespace Server.Controllers.Resources
 {
     public class Bought
     {
-        public Models.ProductMDB Article { get; set; }
-        public Models.UserMDB User { get; set; }
+        public IEnumerable<Models.Cart> Articles { get; set; }
+        public string UserId { get; set; }
     }
 }
