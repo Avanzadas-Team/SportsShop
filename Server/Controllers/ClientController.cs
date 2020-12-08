@@ -6,31 +6,51 @@ using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("client")]
     [ApiController]
     public class ClientController : ControllerBase
     {
         private readonly GraphDbContext _graphContext;
-        public ClientController(GraphDbContext graphDbContext)
+        private readonly SportsShopDBContext _sportsShopDBContext;
+
+        public ClientController(GraphDbContext graphDbContext, SportsShopDBContext sportsShopDBService)
         {
             _graphContext = graphDbContext;
+            _sportsShopDBContext = sportsShopDBService;
         }
-        [HttpPut]
-        public async Task<IActionResult> Register(User user)
+        [HttpPost]
+        public async Task<IActionResult> Register(UserMDB user)
         {
             return Ok(user);
-        }/*
-        [HttpPut]
-        public async Task<IActionResult> Buy(User user, Article article)
+        }
+        [HttpPut("bought")]
+        public async Task<IActionResult> Buy(Resources.Bought bought)
         {
+            var article = (ProductMDB) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
             return Ok(article);
-        }*/
+        }
 
-        [HttpGet]
-        public async Task<IActionResult> History(User user)
+        [HttpGet("bought/{id}")]
+        public async Task<IActionResult> History(string id)
         {
-            IEnumerable<Article> articlesBought = new List<Article>();
-            //_graphContext
+            var user = _sportsShopDBContext.GetUser(id);
+            List<Resources.Article> articlesBought = new List<Resources.Article>();
+            var articles = _graphContext.GetRelatives(user, typeof(Bought));
+
+            var products = _sportsShopDBContext.GetProducts();
+
+            foreach (var item in products)
+            {
+                foreach (var article in articles)
+                {   
+                    if (article.Node.Id.Equals(item.Id))
+                    {
+                        var add = new Resources.Article(article.Date, item);
+                        articlesBought.Add(add);
+                    }
+                }
+            }
+
             return Ok(articlesBought);
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Models;
 using Server.PresentationModel;
 using Server.Services;
+using Server.Persistence;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,9 +18,9 @@ namespace Server.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly SportsShopDBService _context;
+        private readonly SportsShopDBContext _context;
 
-        public AdminController(SportsShopDBService context)
+        public AdminController(SportsShopDBContext context)
         {
             _context = context;
         }

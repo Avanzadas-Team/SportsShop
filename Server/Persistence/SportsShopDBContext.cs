@@ -1,13 +1,11 @@
 ﻿using MongoDB.Driver;
 using Server.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Server.Services
+namespace Server.Persistence
 {
-    public class SportsShopDBService
+    public class SportsShopDBContext
     {
         private readonly IMongoCollection<UserMDB> _users;
 
@@ -15,7 +13,7 @@ namespace Server.Services
 
         private readonly IMongoCollection<PromotionMDB> _promotions;
 
-        public SportsShopDBService(ISportsShopDBSettings settings)
+        public SportsShopDBContext(ISportsShopDBSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
 
