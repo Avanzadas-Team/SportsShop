@@ -45,7 +45,6 @@ namespace Server.Controllers
                 {   
                     if (article.Node.Id.Equals(item.Id))
                     {
-                        System.Console.WriteLine(article.Node.Id.Equals(item.Id));
                         var add = new Resources.Article(article.Date, item);
                         articlesBought.Add(add);
                     }
