@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
-using Server.PresentationModel;
-using Server.Services;
 using Server.Persistence;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,11 +14,13 @@ namespace Server.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly SportsShopDBContext _context;
+        private readonly GraphDbContext _graphContext;
+        private readonly SportsShopDBContext _sportsShopDBContext;
 
-        public AdminController(SportsShopDBContext context)
+        public AdminController(GraphDbContext graphDbContext, SportsShopDBContext sportsShopDBService)
         {
-            _context = context;
+            _graphContext = graphDbContext;
+            _sportsShopDBContext = sportsShopDBService;
         }
 
 
@@ -30,63 +28,64 @@ namespace Server.Controllers
         [HttpGet("users")]
         public IEnumerable<UserMDB> GetUsers()
         {
-            List<UserMDB> users = _context.GetUsers();
+            List<UserMDB> users = _sportsShopDBContext.GetUsers();
             return users;
         }
 
         [HttpGet("products")]
         public IEnumerable<ProductMDB> GetProducts()
         {
-            List<ProductMDB> products = _context.GetProducts();
+            List<ProductMDB> products = _sportsShopDBContext.GetProducts();
             return products;
         }
 
         [HttpPost("cart/{id}")]
-        public int addProductToCart(string id, Cart cart)
+        public int AddProductToCart(string id, Cart cart)
         {
-            var user = _context.GetUser(id);
-            var x = user.Cart.Count();
-            var carts = user.Cart.ToList();
-            bool flag = false;
-            if(x == 0)
+            UserMDB user = _sportsShopDBContext.GetUser(id);
+            ProductMDB product = _sportsShopDBContext.GetProduct(cart.ProductId);
+
+            AddToCart cartAdd = _graphContext
+                .GetRelations<AddToCart>(user, product)
+                .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                .FirstOrDefault();
+
+            bool itemInCart = cartAdd != null;
+            if(itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
             {
-                carts.Add(cart);
+                cartAdd.Quantity += cart.Quantity;
+                cartAdd.Date = System.DateTime.Now;
+                _graphContext.UpdateRelation(user,cartAdd,product);
             }
             else
             {
-                for(int c = 0; c < x; c++)
-                {
-                    if(carts[c].ProductId == cart.ProductId)
-                    {
-                        carts[c].Quantity += cart.Quantity;
-                        flag = true;
-                    }else{ 
-                        if (c == x - 1 && !flag)
-                        {
-                            carts.Add(cart);
-                        }
-                    }
-                }
+                cartAdd = new AddToCart(cart.Quantity);
+                _graphContext.CreateRelation(user,cartAdd,product);
             }
-            user.Cart = carts;   
-            _context.UpdateUser(id, user);
-            return x;
+
+
+            return cartAdd.Quantity;
         }
 
         [HttpGet("cart/{id}")]
-        public IEnumerable<CartModel> getCarToUser(string id)
+        public IEnumerable<Resources.CartModel> GetCarToUser(string id)
         {
-            var cart = _context.GetUser(id).Cart;
-            List<CartModel> carts = new List<CartModel>();
-            foreach(var c in cart)
+            UserMDB user = _sportsShopDBContext.GetUser(id);
+
+            //var cart = _sportsShopDBContext.GetUser(id).Cart;
+            List<Resources.CartModel> carts = new List<Resources.CartModel>();
+            IEnumerable<RelatedItem<AddToCart>> cart = _graphContext
+                .GetRelatives<AddToCart>(user)
+                .Where(p => p.Relation.Status == AddToCart.CartStatus.InCart);
+            foreach (var c in cart)
             {
-                CartModel cm = new CartModel();
-                var prodInfo = _context.GetProduct(c.ProductId);
+                Resources.CartModel cm = new Resources.CartModel();
+                var prodInfo = _sportsShopDBContext.GetProduct(c.Node.Id);
                 cm.image = prodInfo.Imagen;
                 cm.Name = prodInfo.Name;
                 cm.price = prodInfo.Precio;
-                cm.prodId = c.ProductId;
-                cm.quantity = c.Quantity;
+                cm.prodId = c.Node.Id;
+                cm.quantity = c.Relation.Quantity;
                 carts.Add(cm);
             }
 
@@ -94,52 +93,62 @@ namespace Server.Controllers
         }
 
         [HttpPut("cart/{id}")]
-        public Cart updateProdToCart(string id, Cart prod)
+        public Cart UpdateProdToCart(string id, Cart prod)
         {
-            var user = _context.GetUser(id);
-            var x = user.Cart.Count();
-            var carts = user.Cart.ToList();
-            for (int c = 0; c < x; c++)
+            UserMDB user = _sportsShopDBContext.GetUser(id);
+            ProductMDB product = _sportsShopDBContext.GetProduct(prod.ProductId);
+
+            AddToCart cartAdd = _graphContext
+                .GetRelations<AddToCart>(user, product)
+                .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                .FirstOrDefault();
+
+            bool itemInCart = cartAdd != null;
+            if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
             {
-                if (carts[c].ProductId == prod.ProductId)
-                {
-                    carts[c].Quantity = prod.Quantity;
-                }
+                cartAdd.Quantity = prod.Quantity;
+                cartAdd.Date = System.DateTime.Now;
+                _graphContext.UpdateRelation(user, cartAdd, product);
             }
-            user.Cart = carts;
-            _context.UpdateUser(id, user);
+
             return prod;
         }
 
         [HttpDelete("cart/{id}/{prodId}")]
         public List<Cart> deleteProdToCart(string id, string prodId)
         {
-            var user = _context.GetUser(id);
-            List<Cart> newcart = user.Cart.ToList();
-            if(newcart.Count() == 1)
-            {
-                newcart = new List<Cart>();
-            }
-            for(int c = 0; c < newcart.Count(); c++)
-            {
-                if(newcart[c].ProductId != prodId)
-                {
-                    newcart.Remove(newcart[c]);
-                }
-            }
-            //newcart.Remove();
+            UserMDB user = _sportsShopDBContext.GetUser(id);
+            ProductMDB product = _sportsShopDBContext.GetProduct(prodId);
 
-            user.Cart = newcart;
+            AddToCart cartAdd = _graphContext
+                .GetRelations<AddToCart>(user, product)
+                .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                .FirstOrDefault();
 
-            _context.UpdateUser(id, user);
-            return newcart;
+            bool itemInCart = cartAdd != null;
+            if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
+            {
+                cartAdd.Quantity = 0;
+                cartAdd.Date = System.DateTime.Now;
+                cartAdd.Status = AddToCart.CartStatus.Deleted;
+                _graphContext.UpdateRelation(user, cartAdd, product);
+            }
+
+            List<Cart> newCart = new List<Cart>();
+
+            _graphContext
+                .GetRelatives<AddToCart>(user)
+                .Where(p => p.Relation.Status == AddToCart.CartStatus.InCart).ToList().ForEach(
+                value => newCart.Add(new Cart { ProductId = value.Node.Id, Quantity = value.Relation.Quantity}));
+
+            return newCart;
         }
 
         // GET: api/<AdminController>
         [HttpPost("users/sname")]
         public UserMDB GetUserbyName(UserMDB user)
         {
-            List<UserMDB> users = _context.GetUsers();
+            List<UserMDB> users = _sportsShopDBContext.GetUsers();
 
             var userFound = new UserMDB();
 
@@ -158,7 +167,7 @@ namespace Server.Controllers
         [HttpPost("users/susername")]
         public UserMDB GetUserbyUserName(UserMDB user)
         {
-            List<UserMDB> users = _context.GetUsers();
+            List<UserMDB> users = _sportsShopDBContext.GetUsers();
 
             var userFound = new UserMDB();
 
@@ -177,7 +186,7 @@ namespace Server.Controllers
         [HttpPost("users/username")]
         public UserMDB RegisterUser(UserMDB user)
         {
-            _context.CreateUser(user);
+            _sportsShopDBContext.CreateUser(user);
 
             return user;
         }
@@ -185,8 +194,8 @@ namespace Server.Controllers
         [HttpPost("image/{id}")]
         public async Task<ProductMDB> CreateImage([FromForm] IFormFile image, string id)
         {
-            var product = _context.GetProduct(id);
-            _context.UpdateProduct(id, product);
+            var product = _sportsShopDBContext.GetProduct(id);
+            _sportsShopDBContext.UpdateProduct(id, product);
 
             return product;
         }
@@ -194,14 +203,14 @@ namespace Server.Controllers
         [HttpGet("productimages/{id}")]
         public IActionResult GetMovieImages(string id)
         {
-            string images = _context.GetProduct(id).Imagen;
+            string images = _sportsShopDBContext.GetProduct(id).Imagen;
             return Ok(images);
         }
 
         [HttpPost("product")]
         public ProductMDB CreateProduct(ProductMDB product)
         {
-            _context.CreateProduct(product);
+            _sportsShopDBContext.CreateProduct(product);
 
             return product;
         }
@@ -209,7 +218,7 @@ namespace Server.Controllers
         [HttpPost("promotion")]
         public PromotionMDB CreatePromotion(PromotionMDB promotion)
         {
-            _context.CreatePromotion(promotion);
+            _sportsShopDBContext.CreatePromotion(promotion);
 
             return promotion;
         }

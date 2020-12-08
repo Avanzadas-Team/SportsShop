@@ -8,7 +8,6 @@ namespace Server.Controllers.Resources
 {
     public class Article
     {
-
         public DateTime Date { get; set; }
         public Models.ProductMDB article { get; set; }
 

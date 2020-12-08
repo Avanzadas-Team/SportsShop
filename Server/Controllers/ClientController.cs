@@ -35,7 +35,7 @@ namespace Server.Controllers
         {
             var user = _sportsShopDBContext.GetUser(id);
             List<Resources.Article> articlesBought = new List<Resources.Article>();
-            var articles = _graphContext.GetRelatives(user, typeof(Bought));
+            var articles = _graphContext.GetRelatives<Bought>(user);
 
             var products = _sportsShopDBContext.GetProducts();
 
@@ -45,7 +45,7 @@ namespace Server.Controllers
                 {   
                     if (article.Node.Id.Equals(item.Id))
                     {
-                        var add = new Resources.Article(article.Date, item);
+                        var add = new Resources.Article(article.Relation.Date, item);
                         articlesBought.Add(add);
                     }
                 }
