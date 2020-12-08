@@ -30,17 +30,28 @@ namespace Server.Controllers
             return Ok(article);
         }
 
-        [HttpGet("bought")]
-        public async Task<IActionResult> History(UserMDB user)
+        [HttpGet("bought/{id}")]
+        public async Task<IActionResult> History(string id)
         {
+            var user = _sportsShopDBContext.GetUser(id);
             List<Resources.Article> articlesBought = new List<Resources.Article>();
             var articles = _graphContext.GetRelatives(user, typeof(Bought));
-            _sportsShopDBContext.GetProducts().ForEach(value =>
+
+            var products = _sportsShopDBContext.GetProducts();
+
+            foreach (var item in products)
             {
                 foreach (var article in articles)
-                    if (article.Node.Id == value.Id)
-                        articlesBought.Add(new Resources.Article(article.Date,value));
-            });
+                {   
+                    if (article.Node.Id.Equals(item.Id))
+                    {
+                        System.Console.WriteLine(article.Node.Id.Equals(item.Id));
+                        var add = new Resources.Article(article.Date, item);
+                        articlesBought.Add(add);
+                    }
+                }
+            }
+
             return Ok(articlesBought);
         }
     }

@@ -8,13 +8,15 @@ namespace Server.Controllers.Resources
 {
     public class Article
     {
+
+        public DateTime Date { get; set; }
+        public Models.ProductMDB article { get; set; }
+
         public Article(DateTime date, ProductMDB article)
         {
             Date = date;
             this.article = article;
         }
 
-        DateTime Date { get; set; }
-        Models.ProductMDB article {get; set;}
     }
 }

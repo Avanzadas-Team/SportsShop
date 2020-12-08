@@ -27,5 +27,8 @@ namespace Server.Models
 
         [BsonElement("password")]
         public string Password { get; set; }
+
+        [BsonElement("cart")]
+        public IEnumerable<String> Cart { get; set; }
     }
 }
