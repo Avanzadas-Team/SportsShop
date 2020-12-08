@@ -27,26 +27,29 @@ namespace Server.Controllers
         [HttpPut("bought")]
         public async Task<IActionResult> Buy(Resources.Bought bought)
         {
-            UserMDB user = bought.User;
-            ProductMDB product = bought.Article;
-
-            AddToCart cartAdd = _graphContext
-                .GetRelations<AddToCart>(user, product)
-                .Where(c => c.Status == AddToCart.CartStatus.InCart)
-                .FirstOrDefault();
-
-            bool itemInCart = cartAdd != null;
-            if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
+            UserMDB user = _sportsShopDBContext.GetUser(bought.UserId);
+            IEnumerable<Cart> products = bought.Articles;
+            foreach (var cart in products)
             {
-                cartAdd.Date = System.DateTime.Now;
-                cartAdd.Status = AddToCart.CartStatus.Bought;
-                _graphContext.UpdateRelation(user, cartAdd, product);
+                ProductMDB product = _sportsShopDBContext.GetProduct(cart.ProductId);
+
+                AddToCart cartAdd = _graphContext
+                    .GetRelations<AddToCart>(user, product)
+                    .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                    .FirstOrDefault();
+
+                bool itemInCart = cartAdd != null;
+                if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
+                {
+                    cartAdd.Date = System.DateTime.Now;
+                    cartAdd.Status = AddToCart.CartStatus.Bought;
+                    _graphContext.UpdateRelation(user, cartAdd, product);
+                }
+
+                if(cartAdd != null)
+                    for(int i = 0; i<cartAdd.Quantity;i++)
+                        _graphContext.CreateRelation(user, new Bought(), product);
             }
-
-            if(cartAdd != null)
-                for(int i = 0; i<cartAdd.Quantity;i++)
-                    _graphContext.CreateRelation(user, new Bought(), product);
-
             return Ok(_graphContext.GetRelatives<Bought>(user));
         }
 
