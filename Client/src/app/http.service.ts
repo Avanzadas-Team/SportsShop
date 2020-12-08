@@ -25,7 +25,7 @@ export class HttpService {
   }
 
   getProducts(){
-    return this.http.get("https://localhost:44383/admin/products/");
+    return this.http.get("https://localhost:44383/adminquery/products/");
   }
 
   postPromotion(info){
@@ -47,5 +47,9 @@ export class HttpService {
 
   UpdateProdInCart(id, prod){
     return this.http.put("https://localhost:44383/admin/cart/" + id,prod);
+  }
+
+  createBought(info){
+    return this.http.put("https://localhost:44383/client/bought",info);
   }
 }

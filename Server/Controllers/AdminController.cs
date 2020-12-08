@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Server.Controllers.Resources;
 using Server.Models;
 using Server.Persistence;
 
@@ -40,21 +41,22 @@ namespace Server.Controllers
         }
 
         [HttpPost("cart/{id}")]
-        public int AddProductToCart(string id, Cart cart)
+        public AddToCart AddProductToCart(string id, Cart cart)
         {
             UserMDB user = _sportsShopDBContext.GetUser(id);
             ProductMDB product = _sportsShopDBContext.GetProduct(cart.ProductId);
 
             AddToCart cartAdd = _graphContext
                 .GetRelations<AddToCart>(user, product)
-                .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                .Where(c => c.Status == AddToCart.CartStatus.InCart || c.Status == AddToCart.CartStatus.Deleted || c.Status == AddToCart.CartStatus.Bought)
                 .FirstOrDefault();
 
             bool itemInCart = cartAdd != null;
-            if(itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
+            if(itemInCart && (cartAdd.Status == AddToCart.CartStatus.InCart || cartAdd.Status == AddToCart.CartStatus.Deleted || cartAdd.Status == AddToCart.CartStatus.Bought))
             {
                 cartAdd.Quantity += cart.Quantity;
                 cartAdd.Date = System.DateTime.Now;
+                cartAdd.Status = AddToCart.CartStatus.InCart;
                 _graphContext.UpdateRelation(user,cartAdd,product);
             }
             else
@@ -64,7 +66,7 @@ namespace Server.Controllers
             }
 
 
-            return cartAdd.Quantity;
+            return cartAdd;
         }
 
         [HttpGet("cart/{id}")]
@@ -115,7 +117,7 @@ namespace Server.Controllers
         }
 
         [HttpDelete("cart/{id}/{prodId}")]
-        public List<Cart> DeleteProdToCart(string id, string prodId)
+        public List<CartModel> DeleteProdToCart(string id, string prodId)
         {
             UserMDB user = _sportsShopDBContext.GetUser(id);
             ProductMDB product = _sportsShopDBContext.GetProduct(prodId);
@@ -134,12 +136,21 @@ namespace Server.Controllers
                 _graphContext.UpdateRelation(user, cartAdd, product);
             }
 
-            List<Cart> newCart = new List<Cart>();
+            List<CartModel> newCartID = new List<CartModel>();
 
             _graphContext
                 .GetRelatives<AddToCart>(user)
                 .Where(p => p.Relation.Status == AddToCart.CartStatus.InCart).ToList().ForEach(
-                value => newCart.Add(new Cart { ProductId = value.Node.Id, Quantity = value.Relation.Quantity}));
+                value => newCartID.Add(new CartModel { prodId = value.Node.Id, quantity = value.Relation.Quantity}));
+
+            List<CartModel> newCart = new List<CartModel>();
+            foreach (var c in newCartID)
+            {
+                var productInfo = _sportsShopDBContext.GetProduct(c.prodId);
+                c.image = productInfo.Imagen;
+                c.price = productInfo.Precio;
+                newCart.Add(c);
+            }
 
             return newCart;
         }
