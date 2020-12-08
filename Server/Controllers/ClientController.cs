@@ -43,8 +43,9 @@ namespace Server.Controllers
                 _graphContext.UpdateRelation(user, cartAdd, product);
             }
 
-            for(int i = 0; i<cartAdd.Quantity;i++)
-                _graphContext.CreateRelation(user, new Bought(), product);
+            if(cartAdd != null)
+                for(int i = 0; i<cartAdd.Quantity;i++)
+                    _graphContext.CreateRelation(user, new Bought(), product);
 
             return Ok(_graphContext.GetRelatives<Bought>(user));
         }
