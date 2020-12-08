@@ -6,31 +6,41 @@ using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("client")]
     [ApiController]
     public class ClientController : ControllerBase
     {
         private readonly GraphDbContext _graphContext;
-        public ClientController(GraphDbContext graphDbContext)
+        private readonly SportsShopDBContext _sportsShopDBContext;
+
+        public ClientController(GraphDbContext graphDbContext, SportsShopDBContext sportsShopDBService)
         {
             _graphContext = graphDbContext;
+            _sportsShopDBContext = sportsShopDBService;
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Register(User user)
         {
             return Ok(user);
-        }/*
-        [HttpPut]
-        public async Task<IActionResult> Buy(User user, Article article)
+        }
+        [HttpPut("bought")]
+        public async Task<IActionResult> Buy(Resources.Bought bought)
         {
+            var article = (Article) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
             return Ok(article);
-        }*/
+        }
 
-        [HttpGet]
+        [HttpGet("bought")]
         public async Task<IActionResult> History(User user)
         {
-            IEnumerable<Article> articlesBought = new List<Article>();
-            //_graphContext
+            List<Resources.Article> articlesBought = new List<Resources.Article>();
+            var articles = _graphContext.GetRelatives(user, typeof(Bought));
+            _sportsShopDBContext.GetProducts().ForEach(value =>
+            {
+                foreach (var article in articles)
+                    if (article.Node.Id == value.Id)
+                        articlesBought.Add(new Resources.Article(article.Date,value));
+            });
             return Ok(articlesBought);
         }
     }

@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Server.Models
 {
-    public class Bought : IRelation
+    public class AddToCart : IRelation
     {
         public DateTime Date { get; set; }
-
-        public Bought()
+        public AddToCart()
         {
             Date = DateTime.Now;
         }
