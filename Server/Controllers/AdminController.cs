@@ -115,7 +115,7 @@ namespace Server.Controllers
         }
 
         [HttpDelete("cart/{id}/{prodId}")]
-        public List<Cart> deleteProdToCart(string id, string prodId)
+        public List<Cart> DeleteProdToCart(string id, string prodId)
         {
             UserMDB user = _sportsShopDBContext.GetUser(id);
             ProductMDB product = _sportsShopDBContext.GetProduct(prodId);

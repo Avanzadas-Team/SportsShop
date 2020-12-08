@@ -11,7 +11,7 @@ namespace Server.Persistence
     public class GraphDbContext
     {
         private readonly IGraphClient _client;
-        private static string regexPattern = "\"([^\"]+)\":";
+        private readonly static string regexPattern = "\"([^\"]+)\":";
 
         public GraphDbContext(IGraphDbSettings settings)
         {
@@ -85,7 +85,7 @@ namespace Server.Persistence
         /// Check if a relation of tipe relation between nodeFrom and nodeTo
         /// </summary>
         /// <param name="nodeFrom">Node From</param>
-        /// <param name="relationType">Type of the Edge</param>
+        /// <param name="T">Type of the Edge</param>
         /// <param name="nodeTo">Node To</param>
         /// <returns>Relations between the Nodes of type relationType</returns>
         public IEnumerable<T> GetRelations<T> (INode nodeFrom, INode nodeTo) where T : IRelation

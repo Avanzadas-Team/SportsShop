@@ -2,6 +2,7 @@
 using Server.Models;
 using Server.Persistence;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Server.Controllers
@@ -26,7 +27,23 @@ namespace Server.Controllers
         [HttpPut("bought")]
         public async Task<IActionResult> Buy(Resources.Bought bought)
         {
-            var article = (ProductMDB) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
+            UserMDB user = bought.User;
+            ProductMDB product = bought.Article;
+
+            AddToCart cartAdd = _graphContext
+                .GetRelations<AddToCart>(user, product)
+                .Where(c => c.Status == AddToCart.CartStatus.InCart)
+                .FirstOrDefault();
+
+            bool itemInCart = cartAdd != null;
+            if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
+            {
+                cartAdd.Quantity = 0;
+                cartAdd.Date = System.DateTime.Now;
+                cartAdd.Status = AddToCart.CartStatus.Bought;
+                _graphContext.UpdateRelation(user, cartAdd, product);
+            }
+            var article = (ProductMDB) _graphContext.CreateRelation(user, new Bought(), product);
             return Ok(article);
         }
 
