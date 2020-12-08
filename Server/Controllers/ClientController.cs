@@ -19,19 +19,19 @@ namespace Server.Controllers
             _sportsShopDBContext = sportsShopDBService;
         }
         [HttpPost]
-        public async Task<IActionResult> Register(User user)
+        public async Task<IActionResult> Register(UserMDB user)
         {
             return Ok(user);
         }
         [HttpPut("bought")]
         public async Task<IActionResult> Buy(Resources.Bought bought)
         {
-            var article = (Article) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
+            var article = (ProductMDB) _graphContext.CreateRelation(bought.User, new Bought(), bought.Article);
             return Ok(article);
         }
 
         [HttpGet("bought")]
-        public async Task<IActionResult> History(User user)
+        public async Task<IActionResult> History(UserMDB user)
         {
             List<Resources.Article> articlesBought = new List<Resources.Article>();
             var articles = _graphContext.GetRelatives(user, typeof(Bought));
