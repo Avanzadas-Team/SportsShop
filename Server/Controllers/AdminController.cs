@@ -30,6 +30,13 @@ namespace Server.Controllers
             return users;
         }
 
+        [HttpGet("products")]
+        public IEnumerable<ProductMDB> GetProducts()
+        {
+            List<ProductMDB> products = _context.GetProducts();
+            return products;
+        }
+
         // GET: api/<AdminController>
         [HttpPost("users/sname")]
         public UserMDB GetUserbyName(UserMDB user)
@@ -80,18 +87,7 @@ namespace Server.Controllers
         [HttpPost("image/{id}")]
         public async Task<ProductMDB> CreateImage([FromForm] IFormFile image, string id)
         {
-            byte[] fileBytes;
-
-            using (var stream = new MemoryStream())
-            {
-                await image.CopyToAsync(stream);
-                fileBytes = stream.ToArray();
-            }
-
             var product = _context.GetProduct(id);
-
-            product.Imagen = fileBytes;
-
             _context.UpdateProduct(id, product);
 
             return product;
@@ -100,8 +96,8 @@ namespace Server.Controllers
         [HttpGet("productimages/{id}")]
         public IActionResult GetMovieImages(string id)
         {
-            byte[] images = _context.GetProduct(id).Imagen;
-            return File(images, "image/jpeg");
+            string images = _context.GetProduct(id).Imagen;
+            return Ok(images);
         }
 
         [HttpPost("product")]

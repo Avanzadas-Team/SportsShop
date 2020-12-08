@@ -15,6 +15,12 @@ namespace Server.Models
 
         [BsonElement("name")]
         public string Name { get; set; }
+        [BsonElement("lname")]
+        public string LName { get; set; }
+        [BsonElement("birthdate")]
+        public string Birthdate { get; set; }
+        [BsonElement("sex")]
+        public string Sex { get; set; }
 
         [BsonElement("username")]
         public string UserName { get; set; }

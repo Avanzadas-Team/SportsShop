@@ -32,7 +32,7 @@ namespace Server.Models
         public int UnDisp { get; set; }
 
         [BsonElement("imagen")]
-        public byte[] Imagen { get; set; }
+        public string Imagen { get; set; }
 
         [BsonElement("tipo")]
         public int Tipo { get; set; }

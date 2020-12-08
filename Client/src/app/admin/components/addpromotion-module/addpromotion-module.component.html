@@ -1,0 +1,35 @@
+<div class="container-fluid" id="jumboAU">
+    <h1 class="display-1 text-center" id="title">Add Promotion</h1>
+    <hr class="my-4">
+    <p class="h4 text-center" id="desc">This page allows you to add an promotion on the platform.</p>
+</div>
+<div style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
+    <label for="name">Promotion Name:</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="pname">
+    <label for="name">Description:</label>
+    <input type="text" class="form-control" id="lname" [(ngModel)]="description">
+    <div>
+        <label for="name">Product Name:</label>
+        <select name="" id="sexuality" class="form-control" [(ngModel)]="productId" (change) = "getName()">
+            <option *ngFor="let prod of products" value="{{prod.id}}">{{prod.name}}</option>
+        </select>
+    </div>
+    <label for="birth">Type:</label>
+    <select name="" id="sexuality" class="form-control" [(ngModel)]="dog" (change) = "dogChange()">
+        <option value="Promotion">Promotion</option>
+        <option value="give-away">give-away</option>
+    </select>
+    <div *ngIf="dog == 'Promotion'">
+        <label for="porcent">Discount:</label>
+        <input type="number" class="form-control" [(ngModel)]="discount">
+    </div>
+    <div *ngIf="dog == 'give-away'">
+        <label for="porcent">Give-away description:</label>
+        <input type="text" class="form-control" [(ngModel)]="gvdescription">
+   </div>
+    <label for="birth">Init Date:</label>
+    <input type="date" id="birthdate" class="form-control" [(ngModel)]="initDate">
+    <label for="birth">Finish Date:</label>
+    <input type="date" id="birthdate" class="form-control" [(ngModel)]="finishDate">
+    <button (click) = "addPromotion()" class="btn-lg btn-dark">Add Article!</button>
+</div>

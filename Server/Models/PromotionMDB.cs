@@ -29,12 +29,12 @@ namespace Server.Models
         public string Percentage { get; set; }
 
         [BsonElement("descr")]
-        public string Description { get; set; }
+        public string Descrip { get; set; }
 
         [BsonElement("fechaIn")]
-        public DateTime FechaIn { get; set; }
+        public string FechaIn { get; set; }
 
         [BsonElement("fechaFin")]
-        public DateTime FechaFin { get; set; }
+        public string FechaFin { get; set; }
     }
 }

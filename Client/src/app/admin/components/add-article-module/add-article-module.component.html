@@ -26,15 +26,15 @@
         <option value="No">No</option>
     </select>
     <label for="image">Image:</label>
-    <input class="file-input form-control" type="file" [(ngModel)]="image">
+    <input class="file-input form-control" type="file" (change)="onChange($event)">
     <div>
         <label for="sexuality">Units in Stock:</label>
         <input type="number" min="0" class="form-control" [(ngModel)]="stock" required>
     </div>
     <label for="type">Type:</label>
     <select name="" id="sexuality" class="form-control" [(ngModel)]="type">
-        <option value="Clothe">Clothe</option>
-        <option value="Article">Article</option>
+        <option value="0">Clothe</option>
+        <option value="1">Article</option>
     </select>
     <button (click) = "addArticle()" class="btn-lg btn-dark">Add Article!</button>
 </div>
