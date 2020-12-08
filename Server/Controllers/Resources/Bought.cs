@@ -2,7 +2,7 @@
 {
     public class Bought
     {
-        public Models.Article Article { get; set; }
-        public Models.User User { get; set; }
+        public Models.ProductMDB Article { get; set; }
+        public Models.UserMDB User { get; set; }
     }
 }
