@@ -38,13 +38,15 @@ namespace Server.Controllers
             bool itemInCart = cartAdd != null;
             if (itemInCart && cartAdd.Status == AddToCart.CartStatus.InCart)
             {
-                cartAdd.Quantity = 0;
                 cartAdd.Date = System.DateTime.Now;
                 cartAdd.Status = AddToCart.CartStatus.Bought;
                 _graphContext.UpdateRelation(user, cartAdd, product);
             }
-            var article = (ProductMDB) _graphContext.CreateRelation(user, new Bought(), product);
-            return Ok(article);
+
+            for(int i = 0; i<cartAdd.Quantity;i++)
+                _graphContext.CreateRelation(user, new Bought(), product);
+
+            return Ok(_graphContext.GetRelatives<Bought>(user));
         }
 
         [HttpGet("bought/{id}")]
