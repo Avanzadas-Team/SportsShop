@@ -8,8 +8,11 @@
     <input type="text" class="form-control" id="name" [(ngModel)]="name">
     <label for="name">Last Name:</label>
     <input type="text" class="form-control" id="lname" [(ngModel)]="lname">
+    <div>
     <label for="name">Username:</label>
-    <input type="text" class="form-control" id="name" (change) = "onUnameChange()" [(ngModel)]="uname">
+        <input type="text" class="form-control" id="name" (change) = "onUnameChange()" [(ngModel)]="uname">
+        <label for="unamecheck" *ngIf="unameCheck != true" style="color: red;">El nombre de usuario ya se encuentra en la base de datos.</label>
+    </div>
     <label for="name">Password:</label>
     <input type="password" class="form-control" id="name" [(ngModel)]="pass">
     <label for="birth">Birthdate</label>
@@ -23,5 +26,6 @@
         <br>
         <a [routerLink]="['/login']" routerLinkActive="active">Alredy have an account? Log in here :)</a>
     </div>
+    <label for="registercheck" *ngIf="registerCheck != true" style="color: red;">Resuelve los problemas primero</label>
     <button (click) = "register()" class="btn-lg btn-dark">Register Account!</button>
 </div>

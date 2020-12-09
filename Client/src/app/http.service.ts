@@ -52,4 +52,8 @@ export class HttpService {
   createBought(info){
     return this.http.put("https://localhost:44383/client/bought",info);
   }
+
+  checkUserName(username){
+    return this.http.get("https://localhost:44383/admin/username/"+ username);
+  }
 }
