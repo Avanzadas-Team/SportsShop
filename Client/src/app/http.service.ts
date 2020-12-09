@@ -22,6 +22,10 @@ export class HttpService {
     return this.http.get(this.devURL + "adminquery/history/" + id);
   }
 
+  GetProdAq() {
+    return this.http.get<any[]>(this.devURL + "adminquery/aqproducts");
+  }
+
   register(info) {
     return this.http.post(this.devURL + "admin/users/username", info);
   }
@@ -63,7 +67,7 @@ export class HttpService {
     return this.http.put(this.devURL + "client/bought", info);
   }
 
-  checkUserName(username){
-    return this.http.get("https://localhost:44383/admin/username/"+ username);
+  checkUserName(username) {
+    return this.http.get("https://localhost:44383/admin/username/" + username);
   }
 }

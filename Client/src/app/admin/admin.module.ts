@@ -9,10 +9,11 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from '../http.service';
 import { SearchClientComponent } from './components/search-client/search-client.component';
+import { ProductSalesComponent } from './components/product-sales/product-sales.component';
 
 
 @NgModule({
-  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent],
+  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent, ProductSalesComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,0 +1,31 @@
+<div class="container-fluid" id="jumbo">
+    <h1 class="display-1 text-left" id="title">Products Sales</h1>
+    <hr class="my-4">
+</div>
+<div class="container">
+    <p class="text-center" id="subtitle" >Half Time Supplies Sales History</p>
+    <hr class="my-4" id="myhr">
+ 
+    <hr class="my-4" id="myhr">
+</div>
+
+<ng-container>
+    <div class="container rounded" id="table " >
+        <table class="table text-center" aria-describedby="Registered Users" id="table1">
+            <thead id="th" style="background-color: #e8e8e8;">
+                <tr>
+                    <th id="header">Product</th>
+                    <th id="header">Brand</th>
+                    <th id="header">Units Sold</th>
+                </tr>
+            </thead>
+            <tbody class="scrollable" id="tb" style="background-color: #393e46;">
+                <tr *ngFor="let p of prods$">
+                    <td>{{p.article.name}}</td>
+                    <td>{{p.article.marca}}</td>
+                    <td>{{p.quantity}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
