@@ -30,5 +30,8 @@ namespace Server.Models
 
         [BsonElement("cart")]
         public IEnumerable<Cart> Cart { get; set; }
+
+        [BsonElement("role")]
+        public int role { get; set; }
     }
 }
