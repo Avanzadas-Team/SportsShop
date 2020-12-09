@@ -10,10 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from '../http.service';
 import { SearchClientComponent } from './components/search-client/search-client.component';
 import { ProductSalesComponent } from './components/product-sales/product-sales.component';
+import { CommonClientsComponent } from './components/common-clients/common-clients.component';
 
 
 @NgModule({
-  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent, ProductSalesComponent],
+  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent, ProductSalesComponent, CommonClientsComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,3 +1,4 @@
+import { CommonClientsComponent } from './components/common-clients/common-clients.component';
 import { ProductSalesComponent } from './components/product-sales/product-sales.component';
 import { SearchClientComponent } from './components/search-client/search-client.component';
 import { AddpromotionModuleComponent } from './components/addpromotion-module/addpromotion-module.component';
@@ -9,7 +10,8 @@ const routes: Routes = [
   { path: 'addArticle', component: AddArticleModuleComponent },
   { path: 'addPromotion', component: AddpromotionModuleComponent },
   { path: 'searchClient', component: SearchClientComponent },
-  { path: 'productSales', component: ProductSalesComponent }
+  { path: 'productSales', component: ProductSalesComponent },
+  { path: 'commonClients', component: CommonClientsComponent },
 
 ];
 

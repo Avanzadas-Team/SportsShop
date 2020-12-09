@@ -26,6 +26,10 @@ export class HttpService {
     return this.http.get<any[]>(this.devURL + "adminquery/aqproducts");
   }
 
+  GetClientsInCommon(id: string) {
+    return this.http.get(this.devURL + "adminquery/common/" + id);
+  }
+
   register(info) {
     return this.http.post(this.devURL + "admin/users/username", info);
   }
