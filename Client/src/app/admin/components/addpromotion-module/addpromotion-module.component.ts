@@ -28,7 +28,7 @@ export class AddpromotionModuleComponent implements OnInit {
 
   gvdescription: string = "";
 
-  products = [];
+  products;
 
   dogSelected : boolean;
 

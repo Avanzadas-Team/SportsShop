@@ -2,9 +2,9 @@
 
 namespace Server.Models
 {
-    public class RelatedItem
+    public class RelatedItem<T> where T : IRelation
     {
-        public System.DateTime Date { get; set; }
+        public T Relation { get; set; }
         public Node Node { get; set; }
     }
 }

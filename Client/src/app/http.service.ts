@@ -29,6 +29,23 @@ export class HttpService {
   }
 
   postPromotion(info){
-    return this.http.post("https://localhost:44383/admin/promotion",info)
+    return this.http.post("https://localhost:44383/admin/promotion",info);
+  }
+
+  AddToCart(info, id){
+    console.log(info);
+    return this.http.post("https://localhost:44383/admin/cart/" + id,info);
+  }
+
+  getCart(id){
+    return this.http.get("https://localhost:44383/admin/cart/" + id);
+  }
+
+  deleteProdToCart(id,idProd){
+    return this.http.delete("https://localhost:44383/admin/cart/" + id + "/" + idProd);
+  }
+
+  UpdateProdInCart(id, prod){
+    return this.http.put("https://localhost:44383/admin/cart/" + id,prod);
   }
 }

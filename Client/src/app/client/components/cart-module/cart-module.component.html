@@ -1,0 +1,23 @@
+<div class="container-fluid" id="jumboAU">
+    <h1 class="display-1 text-center" id="title">Your Cart List</h1>
+    <hr class="my-4">
+    <p class="h4 text-center" id="desc">This page allows you to create a purchase or delete products in your cart.</p>
+</div>
+<div class="container" style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12" style="margin-left: 20%;">
+        <div class="row" *ngFor = "let prod of cart">
+            <img class="col-lg-4" src="{{ prod.image }}" alt="Card image" width="10" height="300">
+            <div class="col-lg-6">
+                <h5><a routerLinkActive="active">{{ prod.name }}</a></h5>
+                <p >Price:  ${{ prod.price }}</p>
+                <label for="q">Quantity:</label>
+                <input type="number" min="1" class="form-control" [(ngModel)]="prod.quantity">
+                <button class="btn btn-dark" (click)="deleteToCart(prod)">Delete to Cart</button>
+                <button class="btn btn-dark" (click)="updateProd(prod)">Update</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-dark" (click)="createPurchase()">Complete Purchase</button>
+</div>
