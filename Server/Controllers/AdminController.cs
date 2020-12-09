@@ -235,10 +235,18 @@ namespace Server.Controllers
         }
 
         // GET api/<AdminController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("username/{uname}")]
+        public bool checkUsername(string uname)
         {
-            return "value";
+            var users = _sportsShopDBContext.GetUsers();
+            foreach(var user in users)
+            {
+                if(user.UserName == uname)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // POST api/<AdminController>

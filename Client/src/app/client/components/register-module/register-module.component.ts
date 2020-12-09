@@ -23,6 +23,10 @@ export class RegisterModuleComponent implements OnInit {
 
   lname : string;
 
+  unameCheck = true;
+
+  registerCheck = true;
+
   info;
 
 
@@ -30,20 +34,28 @@ export class RegisterModuleComponent implements OnInit {
   }
 
   onUnameChange(){
+    this.service.checkUserName(this.uname).subscribe(res => {
+      this.unameCheck = Boolean(res);
+    });
     console.log("Revisando nombre de usuario");
   }
 
   register(){
-    this.info = {Name: this.name,
-                LName: this.lname, 
-                Username: this.uname, 
-                Password: this.pass, 
-                Birthdate: this.birthdate, 
-                Sex: this.sexuality,
-                Cart: []};
-    this.service.register(this.info).subscribe(r => {
-      console.log("Respuesta",r);
-    });
+    if(this.unameCheck != true){
+      this.registerCheck = false;
+    }else{
+      this.info = {Name: this.name,
+                  LName: this.lname, 
+                  Username: this.uname, 
+                  Password: this.pass, 
+                  Birthdate: this.birthdate, 
+                  Sex: this.sexuality,
+                  role: 1,
+                  Cart: []};
+      this.service.register(this.info).subscribe(r => {
+        console.log("Respuesta",r);
+      });
+    }
   }
 
 }
