@@ -106,7 +106,6 @@ namespace Server.Controllers
         public async Task<IActionResult> SearchProduct(string id)
         {
            var prod = _sportsShopDBContext.GetProduct(id);
-            List<Resources.ProductInfo> pList = new List<Resources.ProductInfo>();
             Resources.ProductInfo productInfo =  new Resources.ProductInfo();
             productInfo.name = prod.Name;
             productInfo.brand = prod.Marca;
@@ -126,8 +125,7 @@ namespace Server.Controllers
             {
                 productInfo.sports += prod.Deportes.ElementAt(i) + "";
             }
-            pList.Add(productInfo);
-            return Ok(pList);
+            return Ok(productInfo);
         }
 
         [HttpGet("common/{id}")]

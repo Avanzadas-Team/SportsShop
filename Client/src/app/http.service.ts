@@ -10,7 +10,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
   private devURL: string = "https://localhost:44383/";
   private prodURL = "";
-  prodInfo;
   postResponse: string;
   putResponse: string;
 
@@ -35,7 +34,7 @@ export class HttpService {
     return this.http.get<any[]>(this.devURL + "adminquery/prods");
   }
 
-  async GetProductInfo(id: string) {
+  async GetProductInfo(id: string): Promise<any> {
     var request = this.http.get(this.devURL + "adminquery/product/" + id);
     return request;
   }
@@ -82,6 +81,6 @@ export class HttpService {
   }
 
   checkUserName(username) {
-    return this.http.get("https://localhost:44383/admin/username/" + username);
+    return this.http.get(this.devURL + "admin/username/" + username);
   }
 }

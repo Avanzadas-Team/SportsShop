@@ -1,3 +1,4 @@
+import { ProductInfo } from './../../Models/ProductInfo';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscriber } from 'rxjs';
@@ -17,7 +18,7 @@ export class ProductSearchComponent implements OnInit {
   }
 
   prods$;
-  productInfo;
+  productInfo: ProductInfo;
   isClicked: boolean;
 
   prodSelected: Products;
@@ -34,16 +35,13 @@ export class ProductSearchComponent implements OnInit {
   }
 
   async GetProdInfo(id: string) {
-    var request = Array.of((await this.http.GetProductInfo(id)).subscribe(data => {
+    var request = ((await this.http.GetProductInfo(id)).subscribe(data => {
       this.productInfo = data;
     }));
     return request;
   }
   async BtnClick() {
     this.isClicked = true;
-    console.log(this.prodSelected.id);
-    console.log(this.prodSelected.nameAndBrand);
-    this.productInfo = Array.of(await this.GetProdInfo(this.prodSelected.id));
-    console.log(await this.productInfo);
+    this.productInfo = (await this.GetProdInfo(this.prodSelected.id));
   }
 }

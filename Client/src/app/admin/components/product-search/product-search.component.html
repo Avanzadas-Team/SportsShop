@@ -40,19 +40,18 @@
     <hr class="my-4" id="myhr">
 </div>
 <div class="container" *ngIf="isClicked" >
-    <div class="container rounded" id="search" *ngFor = "let prod of productInfo">
+    <div class="container rounded" id="search">
         <div id="myrow" class="row">
-            <img class="col-lg-4" src="{{ prod.image }}" alt="Card image" width="10" height="300">
+            <img class="col-lg-4" src="{{ productInfo.image }}" alt="Card image" width="10" height="300">
             <div id="mycol" class="col">
-                <p class="h1">{{ prod.name }}</p>
+                <p class="h1">{{ productInfo.name }}</p>
                 <hr class="my-4">   
-                <p class="h2">Brand: {{ prod.brand }}</p>
-                <p class="h2">Price:  ${{ prod.price }}</p>
-                <p class="h2">Edition:  ${{ prod.ed }}</p>
-                <p class="h2">Related Sports:  ${{ prod.sports }}</p>
-                <p class="h2">Available Units:  ${{ prod.units }}</p>
+                <p class="h2">Brand: {{ productInfo.brand }}</p>
+                <p class="h2">Price:  ${{ productInfo.price }}</p>
+                <p class="h2">Edition:  {{ productInfo.ed }}</p>
+                <p class="h2">Related Sports:  {{ productInfo.sports }}</p>
+                <p class="h2">Available Units:  {{ productInfo.units }}</p>
             </div>
-
         </div>
         <div class="row">
 
