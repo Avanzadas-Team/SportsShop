@@ -24,43 +24,43 @@ export class HttpService {
   }
 
   register(info) {
-    return this.http.post("https://localhost:44383/admin/users/username", info);
+    return this.http.post(this.devURL + "admin/users/username", info);
   }
 
   postArticle(info) {
-    return this.http.post("https://localhost:44383/admin/product", info);
+    return this.http.post(this.devURL + "admin/product", info);
   }
 
   postImage(id, image) {
-    return this.http.post("https://localhost:44383/admin/productimages/" + id, image);
+    return this.http.post(this.devURL + "admin/productimages/" + id, image);
   }
 
   getProducts() {
-    return this.http.get("https://localhost:44383/adminquery/products/");
+    return this.http.get(this.devURL + "adminquery/products/");
   }
 
   postPromotion(info) {
-    return this.http.post("https://localhost:44383/admin/promotion", info);
+    return this.http.post(this.devURL + "admin/promotion", info);
   }
 
   AddToCart(info, id) {
     console.log(info);
-    return this.http.post("https://localhost:44383/admin/cart/" + id, info);
+    return this.http.post(this.devURL + "admin/cart/" + id, info);
   }
 
   getCart(id) {
-    return this.http.get("https://localhost:44383/admin/cart/" + id);
+    return this.http.get(this.devURL + "admin/cart/" + id);
   }
 
   deleteProdToCart(id, idProd) {
-    return this.http.delete("https://localhost:44383/admin/cart/" + id + "/" + idProd);
+    return this.http.delete(this.devURL + "cart/" + id + "/" + idProd);
   }
 
   UpdateProdInCart(id, prod) {
-    return this.http.put("https://localhost:44383/admin/cart/" + id, prod);
+    return this.http.put(this.devURL + "admin/cart/" + id, prod);
   }
 
   createBought(info) {
-    return this.http.put("https://localhost:44383/client/bought", info);
+    return this.http.put(this.devURL + "client/bought", info);
   }
 }
