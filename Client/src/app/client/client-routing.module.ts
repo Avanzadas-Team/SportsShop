@@ -5,9 +5,9 @@ import { RegisterModuleComponent } from './components/register-module/register-m
 import { CartModuleComponent } from './components/cart-module/cart-module.component';
 
 const routes: Routes = [
-  {path : 'register', component : RegisterModuleComponent},
-  {path : 'createPurchase', component : PurchaseModuleComponent},
-  {path : 'completePurchase', component : CartModuleComponent}
+  { path: 'register', component: RegisterModuleComponent },
+  { path: 'createPurchase', component: PurchaseModuleComponent },
+  { path: 'completePurchase', component: CartModuleComponent }
 ];
 
 @NgModule({

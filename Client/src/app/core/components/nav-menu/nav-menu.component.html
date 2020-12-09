@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #393e46;" id="nav">
+    <a class="navbar-brand" [routerLink]="['']" routerLinkActive="active">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-2">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['searchClient']" routerLinkActive="active">Search Client</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Search Product</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Product Sales</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['addArticle']" routerLinkActive="active">Add Product</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['addPromotion']" routerLinkActive="active">Add Promo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['register']" routerLinkActive="active">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['createPurchase']" routerLinkActive="active">Buy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['completePurchase']" routerLinkActive="active">Cart</a>
+      </li>
+      </ul>
+      <ul class="navbar-nav mr-right mt-2 mt-lg-2">
+        <li class="nav-item">
+          <a class="nav-link">Log Out </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
