@@ -29,7 +29,19 @@ namespace Server.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(_sportsShopDBContext.GetUsers());
+            var users = _sportsShopDBContext.GetUsers().Where(u=> u.role==1).ToList();
+            List<Resources.Users> uList = new List<Resources.Users>();
+            foreach (var u in users)
+            {
+                Resources.Users usr = new Resources.Users
+                {
+                    id = u.Id,
+                    name = u.Name + " " + u.LName,
+                    userName = u.UserName
+                };
+                uList.Add(usr);
+            }
+            return Ok(uList);
         }
         [HttpGet("history/{id}")]
         public async Task<IActionResult> SearchClientHistory(string id)

@@ -6,6 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClientModule } from './client/client.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './core/core.module';
+import { RouterModule } from '@angular/router';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ClientModule,
     HttpClientModule,
-    AdminModule
+    AutocompleteLibModule,
+    AdminModule,
+    CoreModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

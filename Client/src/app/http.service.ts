@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,49 +8,59 @@ import { Injectable } from '@angular/core';
 export class HttpService {
 
   constructor(private http: HttpClient) { }
-  private devURL: string = "http://localhost:44383/";
+  private devURL: string = "https://localhost:44383/";
   private prodURL: string = "https://mymovierest.azurewebsites.net/"
+  private dummyURL = "https://jsonplaceholder.typicode.com/users";
   postResponse: string;
   putResponse: string;
 
-  register(info){
-    return this.http.post("https://localhost:44383/admin/users/username",info);
+
+  GetAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.devURL + "adminquery/users");
   }
 
-  postArticle(info){
-    return this.http.post("https://localhost:44383/admin/product",info);
+  GetUserHistory(id: string) {
+    return this.http.get(this.devURL + "adminquery/history/" + id);
   }
 
-  postImage(id, image){
+  register(info) {
+    return this.http.post("https://localhost:44383/admin/users/username", info);
+  }
+
+  postArticle(info) {
+    return this.http.post("https://localhost:44383/admin/product", info);
+  }
+
+  postImage(id, image) {
     return this.http.post("https://localhost:44383/admin/productimages/" + id, image);
   }
 
-  getProducts(){
+  getProducts() {
     return this.http.get("https://localhost:44383/adminquery/products/");
   }
 
-  postPromotion(info){
-    return this.http.post("https://localhost:44383/admin/promotion",info);
+  postPromotion(info) {
+    return this.http.post("https://localhost:44383/admin/promotion", info);
   }
 
-  AddToCart(info, id){
+  AddToCart(info, id) {
     console.log(info);
-    return this.http.post("https://localhost:44383/admin/cart/" + id,info);
+    return this.http.post("https://localhost:44383/admin/cart/" + id, info);
   }
 
-  getCart(id){
+  getCart(id) {
     return this.http.get("https://localhost:44383/admin/cart/" + id);
   }
 
-  deleteProdToCart(id,idProd){
+  deleteProdToCart(id, idProd) {
     return this.http.delete("https://localhost:44383/admin/cart/" + id + "/" + idProd);
   }
 
-  UpdateProdInCart(id, prod){
-    return this.http.put("https://localhost:44383/admin/cart/" + id,prod);
+  UpdateProdInCart(id, prod) {
+    return this.http.put("https://localhost:44383/admin/cart/" + id, prod);
   }
 
-  createBought(info){
-    return this.http.put("https://localhost:44383/client/bought",info);
+  createBought(info) {
+    return this.http.put("https://localhost:44383/client/bought", info);
   }
 }

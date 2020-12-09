@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Noto+Sans&display=swap');
+
+$bg: #222831;
+$txt: #eeeeee;
+$title: #ffd369;
+
+#body {
+  background-color: $bg;
+  color: $txt;
+}
+
+#title {
+  font-family: 'Fjalla One', sans-serif;
+  color: $title;
+  font-size: 15rem;
+}
+
+#subtitle {
+  font-family: 'Fjalla One', sans-serif;
+  color: $title;
+  font-size: 3rem;
+}
+
+#desc {
+  font-family: 'Noto Sans', sans-serif;
+  color: $txt;
+  font-size: 1.5rem;
+}
