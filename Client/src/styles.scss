@@ -27,3 +27,30 @@ $title: #ffd369;
   color: $txt;
   font-size: 1.5rem;
 }
+
+#form {
+  font-family: 'Noto Sans', sans-serif;
+  color: $txt;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5rem;
+}
+
+#table1 {
+  font-family: 'Noto Sans', sans-serif;
+  border-radius: 5px;
+  border-width: 3px;
+  border-style: solid;
+  color: #e8e8e8;
+  border-color: #e8e8e8;
+}
+
+#th {
+  color: #495464;
+}
+
+#myhr {
+  border: 1px solid #e8e8e8;
+}

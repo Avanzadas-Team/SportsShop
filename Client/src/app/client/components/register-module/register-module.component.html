@@ -1,21 +1,21 @@
-<div class="container-fluid" id="jumboAU">
-    <h1 class="display-1 text-center" id="title">Register a New User.</h1>
+<div class="container-fluid" id="jumbo">
+    <h1 class="display-1 text-center" id="title">Create an account.</h1>
     <hr class="my-4">
-    <p class="h4 text-center" id="desc">This page allows you to register an user on the platform.</p>
+    <p class="h4 text-center" id="desc">Join our family today.</p>
 </div>
-<div style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
+<div id="form">
     <label for="name">Name:</label>
-    <input type="text" class="form-control" id="name" [(ngModel)]="name">
+    <input id="formc" type="text" class="form-control" id="name" [(ngModel)]="name">
     <label for="name">Last Name:</label>
-    <input type="text" class="form-control" id="lname" [(ngModel)]="lname">
+    <input id="formc" type="text" class="form-control" id="lname" [(ngModel)]="lname">
     <label for="name">Username:</label>
-    <input type="text" class="form-control" id="name" (change) = "onUnameChange()" [(ngModel)]="uname">
+    <input id="formc" type="text" class="form-control" id="name" (change) = "onUnameChange()" [(ngModel)]="uname">
     <label for="name">Password:</label>
-    <input type="password" class="form-control" id="name" [(ngModel)]="pass">
+    <input id="formc" type="password" class="form-control" id="name" [(ngModel)]="pass">
     <label for="birth">Birthdate</label>
-    <input type="date" id="birthdate" class="form-control" [(ngModel)]="birthdate">
+    <input id="formc" type="date" id="birthdate" class="form-control" [(ngModel)]="birthdate">
     <label for="sexuality">Sexuality</label>
-    <select name="" id="sexuality" class="form-control" [(ngModel)]="sexuality">
+    <select id="formc" name="" id="sexuality" class="form-control" [(ngModel)]="sexuality">
         <option value="Male">Male</option>
         <option value="Female">Female</option>
     </select>

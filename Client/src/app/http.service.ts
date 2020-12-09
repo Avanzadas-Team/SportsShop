@@ -10,7 +10,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
   private devURL: string = "https://localhost:44383/";
   private prodURL: string = "https://mymovierest.azurewebsites.net/"
-  private dummyURL = "https://jsonplaceholder.typicode.com/users";
   postResponse: string;
   putResponse: string;
 

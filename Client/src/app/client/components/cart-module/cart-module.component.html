@@ -1,12 +1,12 @@
-<div class="container-fluid" id="jumboAU">
+<div class="container-fluid" id="jumbo">
     <h1 class="display-1 text-center" id="title">Your Cart List</h1>
     <hr class="my-4">
-    <p class="h4 text-center" id="desc">This page allows you to create a purchase or delete products in your cart.</p>
+    <p class="h4 text-center" id="desc">Complete your purchase or delete products in your cart.</p>
 </div>
-<div class="container" style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
+<div id="desc" class="container" style="text-align: center; margin-left: 15%; margin-right: 15%; margin-top: 5%;">
     <div class="row">
       <div class="col-lg-12 col-sm-12" style="margin-left: 20%;">
-        <div class="row" *ngFor = "let prod of cart">
+        <div id="product" class="row" *ngFor = "let prod of cart">
             <img class="col-lg-4" src="{{ prod.image }}" alt="Card image" width="10" height="300">
             <div class="col-lg-6">
                 <h5><a routerLinkActive="active">{{ prod.name }}</a></h5>
