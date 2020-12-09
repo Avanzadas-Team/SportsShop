@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Controllers.Resources;
 using Server.Models;
 using Server.Persistence;
 using System.Collections.Generic;
@@ -28,10 +29,10 @@ namespace Server.Controllers
         public async Task<IActionResult> Buy(Resources.Bought bought)
         {
             UserMDB user = _sportsShopDBContext.GetUser(bought.UserId);
-            IEnumerable<Cart> products = bought.Articles;
+            IEnumerable<CartModel> products = bought.Articles;
             foreach (var cart in products)
             {
-                ProductMDB product = _sportsShopDBContext.GetProduct(cart.ProductId);
+                ProductMDB product = _sportsShopDBContext.GetProduct(cart.prodId);
 
                 AddToCart cartAdd = _graphContext
                     .GetRelations<AddToCart>(user, product)
@@ -48,9 +49,9 @@ namespace Server.Controllers
 
                 if(cartAdd != null)
                     for(int i = 0; i<cartAdd.Quantity;i++)
-                        _graphContext.CreateRelation(user, new Bought(), product);
+                        _graphContext.CreateRelation(user, new Models.Bought(), product);
             }
-            return Ok(_graphContext.GetRelatives<Bought>(user));
+            return Ok(_graphContext.GetRelatives<Models.Bought>(user));
         }
 
         [HttpGet("bought/{id}")]
@@ -58,7 +59,7 @@ namespace Server.Controllers
         {
             var user = _sportsShopDBContext.GetUser(id);
             List<Resources.Article> articlesBought = new List<Resources.Article>();
-            var articles = _graphContext.GetRelatives<Bought>(user);
+            var articles = _graphContext.GetRelatives<Models.Bought>(user);
 
             var products = _sportsShopDBContext.GetProducts();
 

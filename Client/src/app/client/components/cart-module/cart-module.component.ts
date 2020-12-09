@@ -7,22 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart-module.component.scss']
 })
 export class CartModuleComponent implements OnInit {
-  id = "5fcd310ead6b16e22cef3ea6";
+
   constructor(private service : HttpService) { }
 
-  cart; 
+  cart;
+  id = "5fcd310ead6b16e22cef3ea6";
+  info;
+
   ngOnInit(): void {
-    this.service.getCart(this.id).subscribe(res =>
-      this.cart = res);
+    this.service.getCart(this.id).subscribe(res =>{
+      this.cart = res
+    });
   }
 
   createPurchase(){
-
+    this.info = {
+      articles: this.cart,
+      userId: this.id
+    }
+    console.log(this.info);
+    this.service.createBought(this.info).subscribe(res => {
+      console.log(res);
+    })  
   }
 
   deleteToCart(prod){
-    console.log(prod.productId)
-    this.service.deleteProdToCart(this.id,prod.productId).subscribe(res => {
+    console.log(prod.prodId)
+    this.service.deleteProdToCart(this.id,prod.prodId).subscribe(res => {
       console.log(res);
       this.cart = res;
     });
