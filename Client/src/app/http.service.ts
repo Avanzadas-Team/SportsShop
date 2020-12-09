@@ -53,7 +53,7 @@ export class HttpService {
   }
 
   deleteProdToCart(id, idProd) {
-    return this.http.delete(this.devURL + "cart/" + id + "/" + idProd);
+    return this.http.delete(this.devURL + "admin/cart/" + id + "/" + idProd);
   }
 
   UpdateProdInCart(id, prod) {
