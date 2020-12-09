@@ -86,10 +86,48 @@ namespace Server.Controllers
         {
             return Ok(_sportsShopDBContext.GetProducts());
         }
+
+        [HttpGet("prods")]
+        public async Task<IActionResult> ProductSearch()
+        {
+            List<Resources.Product> pList = new List<Resources.Product>();
+            var products = _sportsShopDBContext.GetProducts().ToList();
+            foreach(var p in products)
+            {
+                Resources.Product prod = new Resources.Product();
+                prod.id = p.Id;
+                prod.nameAndBrand = p.Name + " - " + p.Marca;
+                pList.Add(prod);
+            }
+            return Ok(pList);
+        }
+
         [HttpGet("product/{id}")]
         public async Task<IActionResult> SearchProduct(string id)
         {
-            return Ok(_sportsShopDBContext.GetProduct(id));
+           var prod = _sportsShopDBContext.GetProduct(id);
+            List<Resources.ProductInfo> pList = new List<Resources.ProductInfo>();
+            Resources.ProductInfo productInfo =  new Resources.ProductInfo();
+            productInfo.name = prod.Name;
+            productInfo.brand = prod.Marca;
+            productInfo.price = prod.Precio;
+            if (prod.EdicionLim == false)
+            {
+                productInfo.ed = "Standar";
+            }
+            else
+            {
+                productInfo.ed = "Limited Edition";
+            }
+            productInfo.units = prod.UnDisp;
+            productInfo.image = prod.Imagen;
+            int i = 0;
+            foreach(var d in prod.Deportes)
+            {
+                productInfo.sports += prod.Deportes.ElementAt(i) + "";
+            }
+            pList.Add(productInfo);
+            return Ok(pList);
         }
 
         [HttpGet("common/{id}")]

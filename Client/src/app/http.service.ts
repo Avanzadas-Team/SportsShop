@@ -10,6 +10,7 @@ export class HttpService {
   constructor(private http: HttpClient) { }
   private devURL: string = "https://localhost:44383/";
   private prodURL = "";
+  prodInfo;
   postResponse: string;
   putResponse: string;
 
@@ -28,6 +29,15 @@ export class HttpService {
 
   GetClientsInCommon(id: string) {
     return this.http.get(this.devURL + "adminquery/common/" + id);
+  }
+
+  GetProdsToSearch() {
+    return this.http.get<any[]>(this.devURL + "adminquery/prods");
+  }
+
+  async GetProductInfo(id: string) {
+    var request = this.http.get(this.devURL + "adminquery/product/" + id);
+    return request;
   }
 
   register(info) {

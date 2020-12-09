@@ -11,10 +11,11 @@ import { HttpService } from '../http.service';
 import { SearchClientComponent } from './components/search-client/search-client.component';
 import { ProductSalesComponent } from './components/product-sales/product-sales.component';
 import { CommonClientsComponent } from './components/common-clients/common-clients.component';
+import { ProductSearchComponent } from './components/product-search/product-search.component';
 
 
 @NgModule({
-  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent, ProductSalesComponent, CommonClientsComponent],
+  declarations: [AddArticleModuleComponent, AddpromotionModuleComponent, SearchClientComponent, ProductSalesComponent, CommonClientsComponent, ProductSearchComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,0 +1,61 @@
+
+<div class="container-fluid" id="jumbo">
+    <h1 class="display-1 text-left" id="title">Store's Inventory</h1>
+    <hr class="my-4">
+</div>
+<br>
+<br>
+<div class="container">
+    <p class="text-center" id="subtitle" >Search a Product by Name or Brand</p>
+    <hr class="my-4" id="myhr">
+    <div class="container rounded" id="search">
+        <form [formGroup]="searchForm" (ngSubmit)="BtnClick()">
+            <div class="row">
+                <div >
+                    <label for="sbar"><strong>Product:</strong></label>
+                </div>
+                <div class="col">
+                    <ng-autocomplete id="sbar" formControlName="text" [(ngModel)]="prodSelected" name="tSelector" required
+                        [data]="prods$ | async "
+                        [searchKeyword]="keyword"
+                        placeHolder="Search a product."
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.nameAndBrand"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+                <div class="col">
+                    <button type="submit" [disabled]="!searchForm.valid" class="btn" id="submit"><strong>Search</strong></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr class="my-4" id="myhr">
+</div>
+<div class="container" *ngIf="isClicked" >
+    <div class="container rounded" id="search" *ngFor = "let prod of productInfo">
+        <div id="myrow" class="row">
+            <img class="col-lg-4" src="{{ prod.image }}" alt="Card image" width="10" height="300">
+            <div id="mycol" class="col">
+                <p class="h1">{{ prod.name }}</p>
+                <hr class="my-4">   
+                <p class="h2">Brand: {{ prod.brand }}</p>
+                <p class="h2">Price:  ${{ prod.price }}</p>
+                <p class="h2">Edition:  ${{ prod.ed }}</p>
+                <p class="h2">Related Sports:  ${{ prod.sports }}</p>
+                <p class="h2">Available Units:  ${{ prod.units }}</p>
+            </div>
+
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+</div>
