@@ -175,24 +175,28 @@ namespace Server.Controllers
             return userFound;
         }
 
-        [HttpPost("users/susername")]
-        public UserMDB GetUserbyUserName(UserMDB user)
+        [HttpPost("login")]
+        public UserMDB GetUserbyUserName(UserInfo user)
         {
             List<UserMDB> users = _sportsShopDBContext.GetUsers();
 
             var userFound = new UserMDB();
 
+            bool t = false;
+
             foreach (var us in users)
             {
-                if (us.UserName == user.UserName)
+                if (us.UserName == user.Username && us.Password == user.Password)
                 {
                     userFound = us;
+                    
                     return userFound;
                 }
             }
 
             return userFound;
         }
+
 
         [HttpPost("users/username")]
         public UserMDB RegisterUser(UserMDB user)
@@ -224,6 +228,13 @@ namespace Server.Controllers
             _sportsShopDBContext.CreateProduct(product);
 
             return product;
+        }
+
+        [HttpGet("promo")]
+        public List<PromotionMDB> getPromo()
+        {
+            return _sportsShopDBContext.GetPromotions();
+
         }
 
         [HttpPost("promotion")]

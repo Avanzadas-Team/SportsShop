@@ -11,13 +11,16 @@ export class CartModuleComponent implements OnInit {
   constructor(private service : HttpService) { }
 
   cart;
-  id = "5fcd310ead6b16e22cef3ea6";
+  id;
   info;
 
   ngOnInit(): void {
+    
+    this.id = localStorage.getItem("id");
     this.service.getCart(this.id).subscribe(res =>{
       this.cart = res
     });
+    console.log(this.id);
   }
 
   createPurchase(){

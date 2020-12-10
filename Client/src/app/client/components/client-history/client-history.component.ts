@@ -15,14 +15,10 @@ export class ClientHistoryComponent implements OnInit {
   prods$: any;
 
   ngOnInit(): void {
-    this.usrID = this.GetUsrID();
+    this.usrID = localStorage.getItem("id");
     this.GetHistory(this.usrID);
   }
-
-  GetUsrID(): string {
-    var id = "5fd03cbfa914d9ca441859a8"
-    return id;
-  }
+  
   GetHistory(id: string): void {
     this.http.GetUserHistory(id).subscribe(data => {
       this.prods$ = data;

@@ -9,7 +9,17 @@ export class NavMenuComponent implements OnInit {
 
   constructor() { }
 
+  role;
+
   ngOnInit(): void {
+    this.role = localStorage.getItem("role");
+  }
+
+  logout(){
+    location.reload();
+    location.replace("/");
+    localStorage.setItem("role","-1");
+    localStorage.setItem("id","");
   }
 
 }
