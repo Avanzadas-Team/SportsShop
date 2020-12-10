@@ -152,7 +152,7 @@ namespace Server.Controllers
                             alreadyInCommon.Products.Add(product);
                         else
                         {
-                            var temp = new Resources.CommonUser(user);
+                            var temp = new Resources.CommonUser(userMDB);
                             temp.Products.Add(product);
                             users.Add(temp);
                         }
