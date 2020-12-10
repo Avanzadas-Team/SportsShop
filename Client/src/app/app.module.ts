@@ -1,3 +1,4 @@
+import { LoginModule } from './login/login.module';
 import { AdminModule } from './admin/admin.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -23,6 +24,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     AdminModule,
     CoreModule,
     RouterModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

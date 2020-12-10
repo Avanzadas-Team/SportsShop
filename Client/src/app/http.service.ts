@@ -83,4 +83,8 @@ export class HttpService {
   checkUserName(username) {
     return this.http.get(this.devURL + "admin/username/" + username);
   }
+
+  login(info){
+    return this.http.post(this.devURL + "admin/login", info);
+  }
 }

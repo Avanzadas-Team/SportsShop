@@ -14,9 +14,10 @@ export class PurchaseModuleComponent implements OnInit {
   product;
   quantity = 1;
   info;
-  id = "5fcd310ead6b16e22cef3ea6";
+  id;
 
   ngOnInit(): void {
+    this.id = localStorage.getItem("id");
     this.service.getProducts().subscribe(res => {
       this.products = res;
     });
