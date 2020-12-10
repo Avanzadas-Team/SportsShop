@@ -1,3 +1,4 @@
+import { ClientHistoryComponent } from './components/client-history/client-history.component';
 import { PurchaseModuleComponent } from './components/purchase-module/purchase-module.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -7,7 +8,8 @@ import { CartModuleComponent } from './components/cart-module/cart-module.compon
 const routes: Routes = [
   { path: 'register', component: RegisterModuleComponent },
   { path: 'createPurchase', component: PurchaseModuleComponent },
-  { path: 'completePurchase', component: CartModuleComponent }
+  { path: 'completePurchase', component: CartModuleComponent },
+  { path: 'purchaseHistory', component: ClientHistoryComponent }
 ];
 
 @NgModule({
