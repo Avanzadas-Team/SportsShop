@@ -136,14 +136,15 @@ namespace Server.Controllers
             var articles = _graphContext.GetRelatives<Bought>(user);
             foreach (var article in articles)
             {
-                var commonUsers = _graphContext.GetRelativesInverse<Bought>(article.Node);
+                ProductMDB product = _sportsShopDBContext.GetProduct(article.Node.Id);
+                var commonUsers = _graphContext.GetRelativesInverse<Bought>(product);
+
                 foreach (var commonUser in commonUsers)
                 {
                     string commonUserId = commonUser.Node.Id;
                     if(commonUserId != id)
                     {
                         UserMDB userMDB = _sportsShopDBContext.GetUser(commonUserId);
-                        ProductMDB product = _sportsShopDBContext.GetProduct(article.Node.Id);
 
                         var alreadyInCommon = users.Where(u => u.User.Id == commonUserId).FirstOrDefault();
 

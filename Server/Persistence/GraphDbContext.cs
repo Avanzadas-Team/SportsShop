@@ -76,8 +76,10 @@ namespace Server.Persistence
         public IEnumerable<RelatedItem<T>> GetRelativesInverse<T>(INode nodeTo) where T : IRelation
         {
             string tag = nodeTo.GetType().Name.ToLower();
-            var results = _client.Cypher.Match(toNode(nodeTo)).Match($"({tag})<-[r:{typeof(T).Name}]-(n)").Return((r, n) =>
-            new RelatedItem<T> { Relation = r.As<T>(), Node = n.As<Node>() }).ResultsAsync.Result;
+            var query = _client.Cypher.Match(toNode(nodeTo)).Match($"({tag})<-[r:{typeof(T).Name}]-(n)").Return((r, n) =>
+            new RelatedItem<T> { Relation = r.As<T>(), Node = n.As<Node>() });
+            Console.WriteLine(query.Query.QueryText);
+            var results = query.ResultsAsync.Result;
 
             return results;
         }
