@@ -41,6 +41,7 @@ export class CommonClientsComponent implements OnInit {
     this.http.GetClientsInCommon(this.userSelected.id).subscribe(data => {
       this.common$ = data;
     });
+    console.log(this.common$);
     this.isClicked = true;
   }
 
