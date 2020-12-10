@@ -44,6 +44,7 @@ namespace Server.Controllers
                 {
                     cartAdd.Date = System.DateTime.Now;
                     cartAdd.Status = AddToCart.CartStatus.Bought;
+                    cartAdd.Quantity = 0;
                     _graphContext.UpdateRelation(user, cartAdd, product);
                 }
 
