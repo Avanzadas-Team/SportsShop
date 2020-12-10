@@ -6,10 +6,11 @@ import { RegisterModuleComponent } from './components/register-module/register-m
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PurchaseModuleComponent } from './components/purchase-module/purchase-module.component';
 import { CartModuleComponent } from './components/cart-module/cart-module.component';
+import { ClientHistoryComponent } from './components/client-history/client-history.component';
 
 
 @NgModule({
-  declarations: [RegisterModuleComponent, PurchaseModuleComponent, CartModuleComponent],
+  declarations: [RegisterModuleComponent, PurchaseModuleComponent, CartModuleComponent, ClientHistoryComponent],
   imports: [
     CommonModule,
     ClientRoutingModule,
