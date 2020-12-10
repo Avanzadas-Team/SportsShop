@@ -86,10 +86,46 @@ namespace Server.Controllers
         {
             return Ok(_sportsShopDBContext.GetProducts());
         }
+
+        [HttpGet("prods")]
+        public async Task<IActionResult> ProductSearch()
+        {
+            List<Resources.Product> pList = new List<Resources.Product>();
+            var products = _sportsShopDBContext.GetProducts().ToList();
+            foreach(var p in products)
+            {
+                Resources.Product prod = new Resources.Product();
+                prod.id = p.Id;
+                prod.nameAndBrand = p.Name + " - " + p.Marca;
+                pList.Add(prod);
+            }
+            return Ok(pList);
+        }
+
         [HttpGet("product/{id}")]
         public async Task<IActionResult> SearchProduct(string id)
         {
-            return Ok(_sportsShopDBContext.GetProduct(id));
+           var prod = _sportsShopDBContext.GetProduct(id);
+            Resources.ProductInfo productInfo =  new Resources.ProductInfo();
+            productInfo.name = prod.Name;
+            productInfo.brand = prod.Marca;
+            productInfo.price = prod.Precio;
+            if (prod.EdicionLim == false)
+            {
+                productInfo.ed = "Standar";
+            }
+            else
+            {
+                productInfo.ed = "Limited Edition";
+            }
+            productInfo.units = prod.UnDisp;
+            productInfo.image = prod.Imagen;
+            int i = 0;
+            foreach(var d in prod.Deportes)
+            {
+                productInfo.sports += prod.Deportes.ElementAt(i) + "";
+            }
+            return Ok(productInfo);
         }
 
         [HttpGet("common/{id}")]
@@ -100,14 +136,15 @@ namespace Server.Controllers
             var articles = _graphContext.GetRelatives<Bought>(user);
             foreach (var article in articles)
             {
-                var commonUsers = _graphContext.GetRelativesInverse<Bought>(article.Node);
+                ProductMDB product = _sportsShopDBContext.GetProduct(article.Node.Id);
+                var commonUsers = _graphContext.GetRelativesInverse<Bought>(product);
+
                 foreach (var commonUser in commonUsers)
                 {
                     string commonUserId = commonUser.Node.Id;
                     if(commonUserId != id)
                     {
                         UserMDB userMDB = _sportsShopDBContext.GetUser(commonUserId);
-                        ProductMDB product = _sportsShopDBContext.GetProduct(article.Node.Id);
 
                         var alreadyInCommon = users.Where(u => u.User.Id == commonUserId).FirstOrDefault();
 
@@ -115,7 +152,7 @@ namespace Server.Controllers
                             alreadyInCommon.Products.Add(product);
                         else
                         {
-                            var temp = new Resources.CommonUser(user);
+                            var temp = new Resources.CommonUser(userMDB);
                             temp.Products.Add(product);
                             users.Add(temp);
                         }

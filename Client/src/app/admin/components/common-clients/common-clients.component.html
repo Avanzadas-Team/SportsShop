@@ -1,0 +1,74 @@
+
+<div class="container-fluid" id="jumbo">
+    <h1 class="display-1 text-left" id="title">Common Clients</h1>
+    <hr class="my-4">
+</div>
+<br>
+<br>
+<div class="container">
+    <p class="text-center" id="subtitle" >Search by Name or Username</p>
+    <hr class="my-4" id="myhr">
+    <div class="container rounded" id="search">
+        <form [formGroup]="searchForm" (ngSubmit)="BtnClick()">
+            <div class="row">
+                <div >
+                    <label for="optionSelector"><strong>Search by:</strong></label>
+                </div>
+                <div class="col">
+                    <select class="form-control" formControlName="option" id="optionSelector" [(ngModel)]="optionSelected" name="oSelector" required>
+                        <option value="" disabled>Choose a option to search</option>
+                        <option *ngFor="let option of Options" [ngValue]="option">{{option}}</option>
+                    </select>
+                </div>
+                <div >
+                    <label for="sbar"><strong>Client:</strong></label>
+                </div>
+                <div class="col">
+                    <ng-autocomplete id="sbar" formControlName="text" [(ngModel)]="userSelected" name="tSelector" required
+                        [data]="users$ | async "
+                        [searchKeyword]="optionSelected"
+                        placeHolder="Search a Client."
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.name +  ' - ' + item.userName"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+                <div class="col">
+                    <button type="submit" [disabled]="!searchForm.valid" class="btn" id="submit"><strong>Search</strong></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr class="my-4" id="myhr">
+</div>
+<ng-container>
+    <div *ngIf="isClicked" class="container rounded" id="table " >
+        <table class="table text-center" aria-describedby="Registered Users" id="table1">
+            <thead id="th" style="background-color: #e8e8e8;">
+                <tr>
+                    <th id="header">Name</th>
+                    <th id="header">Last Name</th>
+                    <th id="header">Product(s) Bought</th>
+                </tr>
+            </thead>
+            <tbody class="scrollable" id="tb" style="background-color: #393e46;">
+                <tr *ngFor="let c of common$" >
+                    <td>{{c.user.name}}</td>
+                    <td>{{c.user.lName}}</td>
+                    <td>
+                        <ul *ngFor="let item of c.products">
+                            <li>{{ item.name }} - {{ item.marca }}</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>

@@ -26,6 +26,19 @@ export class HttpService {
     return this.http.get<any[]>(this.devURL + "adminquery/aqproducts");
   }
 
+  GetClientsInCommon(id: string) {
+    return this.http.get(this.devURL + "adminquery/common/" + id);
+  }
+
+  GetProdsToSearch() {
+    return this.http.get<any[]>(this.devURL + "adminquery/prods");
+  }
+
+  async GetProductInfo(id: string): Promise<any> {
+    var request = this.http.get(this.devURL + "adminquery/product/" + id);
+    return request;
+  }
+
   register(info) {
     return this.http.post(this.devURL + "admin/users/username", info);
   }
@@ -68,6 +81,6 @@ export class HttpService {
   }
 
   checkUserName(username) {
-    return this.http.get("https://localhost:44383/admin/username/" + username);
+    return this.http.get(this.devURL + "admin/username/" + username);
   }
 }
