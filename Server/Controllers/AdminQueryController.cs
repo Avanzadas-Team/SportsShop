@@ -60,7 +60,7 @@ namespace Server.Controllers
                     if (article.Node.Id.Equals(item.Id))
                     {
                         var add =
-                            new Resources.Article(article.Relation.Date, item);
+                            new Resources.Article(article.Relation.Date.ToLongDateString(), item);
                         articlesBought.Add (add);
                     }
                 }
