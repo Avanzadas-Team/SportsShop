@@ -44,13 +44,13 @@ namespace Server.Controllers
                 {
                     cartAdd.Date = System.DateTime.Now;
                     cartAdd.Status = AddToCart.CartStatus.Bought;
-                    cartAdd.Quantity = 0;
-                    _graphContext.UpdateRelation(user, cartAdd, product);
                 }
 
                 if(cartAdd != null)
                     for(int i = 0; i<cartAdd.Quantity;i++)
                         _graphContext.CreateRelation(user, new Models.Bought(), product);
+                cartAdd.Quantity = 0;
+                _graphContext.UpdateRelation(user, cartAdd, product);
             }
             return Ok(_graphContext.GetRelatives<Models.Bought>(user));
         }
