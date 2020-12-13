@@ -12,7 +12,7 @@ export class PurchaseModuleComponent implements OnInit {
 
   products;
   product;
-  quantity = 1;
+  quantity = 0;
   info;
   id;
 
