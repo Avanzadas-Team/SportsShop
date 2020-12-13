@@ -77,7 +77,7 @@ export class HttpService {
   }
 
   createBought(info) {
-    return this.http.put(this.prodURL + "client/bought", info);
+    return this.http.put(this.devURL + "client/bought", info);
   }
 
   checkUserName(username) {

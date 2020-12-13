@@ -33,6 +33,8 @@ namespace Server.Controllers
             foreach (var cart in products)
             {
                 ProductMDB product = _sportsShopDBContext.GetProduct(cart.prodId);
+                product.UnDisp = product.UnDisp - cart.quantity;
+                _sportsShopDBContext.UpdateProduct(product.Id,product);
 
                 AddToCart cartAdd = _graphContext
                     .GetRelations<AddToCart>(user, product)
