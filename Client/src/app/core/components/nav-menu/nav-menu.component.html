@@ -7,41 +7,41 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-2">
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['searchClient']" routerLinkActive="active">Search Client</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['searchClient']" routerLinkActive="active">Search Client</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['searchProduct']" routerLinkActive="active">Search Product</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['searchProduct']" routerLinkActive="active">Search Product</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['productSales']" routerLinkActive="active">Product Sales</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['productSales']" routerLinkActive="active">Product Sales</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['commonClients']" routerLinkActive="active">Common Clients</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['commonClients']" routerLinkActive="active">Common Clients</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['addArticle']" routerLinkActive="active">Add Product</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['addArticle']" routerLinkActive="active">Add Product</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 0" [routerLink]="['addPromotion']" routerLinkActive="active">Add Promo</a>
+        <a class="nav-link" *ngIf="role == '0'" [routerLink]="['addPromotion']" routerLinkActive="active">Add Promo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role != 0 && role != 1" [routerLink]="['register']" routerLinkActive="active">Register</a>
+        <a class="nav-link" *ngIf="role != '0' && role != '1'" [routerLink]="['register']" routerLinkActive="active">Register</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="role != 0 && role != 1" [routerLink]="['login']" routerLinkActive="active"  class="nav-link">Login</a>
+        <a *ngIf="role != '0' && role != '1'" [routerLink]="['login']" routerLinkActive="active"  class="nav-link">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 1" [routerLink]="['createPurchase']" routerLinkActive="active">Buy</a>
+        <a class="nav-link" *ngIf="role == '1'" [routerLink]="['createPurchase']" routerLinkActive="active">Buy</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 1" [routerLink]="['completePurchase']" routerLinkActive="active">Cart</a>
+        <a class="nav-link" *ngIf="role == '1'" [routerLink]="['completePurchase']" routerLinkActive="active">Cart</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="role == 1" [routerLink]="['purchaseHistory']" routerLinkActive="active">Past Purchases</a>
+        <a class="nav-link" *ngIf="role == '1'" [routerLink]="['purchaseHistory']" routerLinkActive="active">Past Purchases</a>
       </li>
       </ul>
       <ul class="navbar-nav mr-right mt-2 mt-lg-2">
-        <li *ngIf="role == 0 || role == 1">
+        <li *ngIf="role == '0' || role == '1'">
           <a class="nav-link" (click)="logout()"  [routerLink]="['/']">Log Out </a>
         </li>
       </ul>

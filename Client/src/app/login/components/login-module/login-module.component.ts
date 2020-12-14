@@ -31,7 +31,7 @@ export class LoginModuleComponent implements OnInit {
         localStorage.setItem("id", this.info.id);
         this.tipoU = localStorage.getItem("role");
         location.reload();
-        console.log(this.tipoU);
+        console.log(localStorage.getItem("role"));
       }
     });
     
