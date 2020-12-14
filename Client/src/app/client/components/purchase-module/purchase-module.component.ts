@@ -20,6 +20,7 @@ export class PurchaseModuleComponent implements OnInit {
     this.id = localStorage.getItem("id");
     this.service.getProducts().subscribe(res => {
       this.products = res;
+      console.log(res);
     });
   }
 

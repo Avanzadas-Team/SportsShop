@@ -11,8 +11,9 @@
             <div class="col-lg-6">
                 <h5><a routerLinkActive="active">{{ prod.name }}</a></h5>
                 <p >Price:  ${{ prod.precio }}</p>
-                <input type="number" class="form-control" [(ngModel)]="quantity" required min="0" max="{{prod.unDisp}}">
-                <button class="btn btn-dark" (click)="addToCart(prod)">Add to Cart</button>
+                <input type="number" class="form-control" *ngIf="prod.unDisp != 0" [(ngModel)]="quantity" required min="0" max="{{prod.unDisp}}">
+                <label for="noQuantity" *ngIf="prod.unDisp == 0">Sold Out</label>
+                <button class="btn btn-dark" *ngIf="prod.unDisp != 0" (click)="addToCart(prod)">Add to Cart</button>
             </div>
         </div>
       </div>
