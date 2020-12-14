@@ -26,12 +26,12 @@ export class LoginModuleComponent implements OnInit {
   login(){
     this.http.login({username: this.username, password: this.password}).subscribe(r => {
       this.info = r;
-      if(this.info != null){
+      if(this.info.userName != null){
         localStorage.setItem("role",this.info.role);
         localStorage.setItem("id", this.info.id);
         this.tipoU = localStorage.getItem("role");
         location.reload();
-        console.log(localStorage.getItem("role"));
+        //console.log(this.info);
       }
     });
     
